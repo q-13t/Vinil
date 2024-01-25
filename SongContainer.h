@@ -179,16 +179,11 @@ namespace Vinil {
 			//this->ClientSize = System::Drawing::Size(486, 68);
 			this->BackColor = System::Drawing::Color::Transparent;
 			this->ColumnCount = 5;
-			this->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
-				9.090909F)));
-			this->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
-				18.18182F)));
-			this->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
-				22.72727F)));
-			this->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
-				22.72727F)));
-			this->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
-				27.27273F)));
+			this->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute, 50)));
+			this->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute, 50)));
+			this->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent, 25.0F)));
+			this->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent, 25.0F)));
+			this->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Absolute, 50)));
 			this->Controls->Add(this->SongCheckBox, 0, 0);
 			this->Controls->Add(this->SongPlayButton, 1, 0);
 			this->Controls->Add(this->SongTitle, 2, 0);
@@ -199,7 +194,7 @@ namespace Vinil {
 			this->RowCount = 1;
 			this->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 100)));
 			this->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 20)));
-			this->Size = System::Drawing::Size(486, 68);
+			this->Size = System::Drawing::Size(486, 50);
 			this->TabIndex = 0;
 			this->Name = L"SongContainer";
 			this->Text = L"SongContainer";

@@ -424,8 +424,7 @@ namespace Vinil {
 			this->MainSongLinearLayout->Name = L"MainSongLinearLayout";
 			this->MainSongLinearLayout->Padding = System::Windows::Forms::Padding(3);
 			this->MainSongLinearLayout->RowCount = 1;
-			this->MainSongLinearLayout->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute,
-				40)));
+			/*this->MainSongLinearLayout->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 40)));*/
 			this->MainSongLinearLayout->Size = System::Drawing::Size(807, 479);
 			this->MainSongLinearLayout->TabIndex = 0;
 			// 
@@ -938,6 +937,7 @@ namespace Vinil {
 
 	private:   delegate Void UpdateSongsDelegate(SongContainer^ el);
 	private:  Void FillSongList(SongContainer^ el) {
+		MainSongLinearLayout->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 40)));
 		MainSongLinearLayout->Controls->Add(el);
 		MainSongLinearLayout->Update();
 	}
@@ -973,8 +973,7 @@ namespace Vinil {
 			UpdateSongsDelegate^ US = gcnew UpdateSongsDelegate(this, &MainForm::FillSongList);
 			auto paths = DataOperator::getMusicPaths();
 			for (size_t i = 0; i < paths->size(); i++) {
-				/*TagLib::FileRef FR(paths->at(i).c_str());
-				if (!FR.isNull() && !FR.tag()->title().isEmpty() && FR.audioProperties() != nullptr)*/
+
 				this->Invoke(US, gcnew SongContainer(&paths->at(i)));
 			}
 		}
