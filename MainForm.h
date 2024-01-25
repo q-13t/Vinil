@@ -60,10 +60,12 @@ namespace Vinil {
 	private: System::Windows::Forms::SplitContainer^ splitContainer4;
 	private: System::Windows::Forms::SplitContainer^ splitContainer5;
 	private: System::Windows::Forms::TrackBar^ VolumeSlider;
+	private: System::Windows::Forms::Button^ MuteButton;
 
-	private: System::Windows::Forms::Button^ sound_button;
+
 	private: System::Windows::Forms::Label^ label3;
-	private: System::Windows::Forms::ProgressBar^ progressBar1;
+	private: System::Windows::Forms::ProgressBar^ SongProgress;
+
 	private: System::Windows::Forms::Label^ label4;
 	private: System::Windows::Forms::Panel^ panel3;
 	private: System::Windows::Forms::Button^ button2;
@@ -94,8 +96,9 @@ namespace Vinil {
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
+		bool muted=false;
 		System::ComponentModel::Container^ components;
-
+		ComponentResourceManager^ res;
 #pragma region Windows Form Designer generated code
 		/// <summary>
 		/// Required method for Designer support - do not modify
@@ -104,6 +107,7 @@ namespace Vinil {
 		void InitializeComponent(void)
 		{
 			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(MainForm::typeid));
+			res = resources;
 			this->splitContainer1 = (gcnew System::Windows::Forms::SplitContainer());
 			this->splitContainer2 = (gcnew System::Windows::Forms::SplitContainer());
 			this->panel1 = (gcnew System::Windows::Forms::Panel());
@@ -132,11 +136,11 @@ namespace Vinil {
 			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->panel4 = (gcnew System::Windows::Forms::Panel());
 			this->label3 = (gcnew System::Windows::Forms::Label());
-			this->progressBar1 = (gcnew System::Windows::Forms::ProgressBar());
+			this->SongProgress = (gcnew System::Windows::Forms::ProgressBar());
 			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->panel3 = (gcnew System::Windows::Forms::Panel());
 			this->VolumeSlider = (gcnew System::Windows::Forms::TrackBar());
-			this->sound_button = (gcnew System::Windows::Forms::Button());
+			this->MuteButton = (gcnew System::Windows::Forms::Button());
 			this->panel2 = (gcnew System::Windows::Forms::Panel());
 			this->splitContainer3 = (gcnew System::Windows::Forms::SplitContainer());
 			this->label1 = (gcnew System::Windows::Forms::Label());
@@ -416,7 +420,9 @@ namespace Vinil {
 			this->MainSongLinearLayout->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
 				100)));
 			this->MainSongLinearLayout->Location = System::Drawing::Point(15, 56);
+			this->MainSongLinearLayout->Margin = System::Windows::Forms::Padding(0);
 			this->MainSongLinearLayout->Name = L"MainSongLinearLayout";
+			this->MainSongLinearLayout->Padding = System::Windows::Forms::Padding(3);
 			this->MainSongLinearLayout->RowCount = 1;
 			this->MainSongLinearLayout->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute,
 				40)));
@@ -651,7 +657,7 @@ namespace Vinil {
 			// 
 			this->panel4->AutoSize = true;
 			this->panel4->Controls->Add(this->label3);
-			this->panel4->Controls->Add(this->progressBar1);
+			this->panel4->Controls->Add(this->SongProgress);
 			this->panel4->Controls->Add(this->label4);
 			this->panel4->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->panel4->Location = System::Drawing::Point(0, 0);
@@ -671,13 +677,16 @@ namespace Vinil {
 			this->label3->Text = L"3:12";
 			this->label3->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
 			// 
-			// progressBar1
+			// SongProgress
 			// 
-			this->progressBar1->Dock = System::Windows::Forms::DockStyle::Fill;
-			this->progressBar1->Location = System::Drawing::Point(0, 0);
-			this->progressBar1->Name = L"progressBar1";
-			this->progressBar1->Size = System::Drawing::Size(730, 25);
-			this->progressBar1->TabIndex = 2;
+			this->SongProgress->Dock = System::Windows::Forms::DockStyle::Fill;
+			this->SongProgress->ForeColor = System::Drawing::SystemColors::ControlText;
+			this->SongProgress->Location = System::Drawing::Point(0, 0);
+			this->SongProgress->Name = L"SongProgress";
+			this->SongProgress->Size = System::Drawing::Size(730, 25);
+			this->SongProgress->Step = 1;
+			this->SongProgress->Style = System::Windows::Forms::ProgressBarStyle::Continuous;
+			this->SongProgress->TabIndex = 2;
 			// 
 			// label4
 			// 
@@ -695,7 +704,7 @@ namespace Vinil {
 			// 
 			this->panel3->AutoSize = true;
 			this->panel3->Controls->Add(this->VolumeSlider);
-			this->panel3->Controls->Add(this->sound_button);
+			this->panel3->Controls->Add(this->MuteButton);
 			this->panel3->Dock = System::Windows::Forms::DockStyle::Right;
 			this->panel3->Location = System::Drawing::Point(-8, 0);
 			this->panel3->Name = L"panel3";
@@ -707,35 +716,34 @@ namespace Vinil {
 			this->VolumeSlider->Dock = System::Windows::Forms::DockStyle::Right;
 			this->VolumeSlider->LargeChange = 1;
 			this->VolumeSlider->Location = System::Drawing::Point(40, 0);
+			this->VolumeSlider->Maximum = 100;
 			this->VolumeSlider->Name = L"VolumeSlider";
 			this->VolumeSlider->Size = System::Drawing::Size(117, 50);
 			this->VolumeSlider->TabIndex = 6;
 			this->VolumeSlider->TickStyle = System::Windows::Forms::TickStyle::Both;
-			this->VolumeSlider->Scroll += gcnew System::EventHandler(this, &MainForm::VolumeSlider_Scroll);
-			this->VolumeSlider->Maximum = 100;
-			this->VolumeSlider->Minimum = 0;
 			this->VolumeSlider->Value = 100;
-
+			this->VolumeSlider->Scroll += gcnew System::EventHandler(this, &MainForm::VolumeSlider_Scroll);
 			// 
-			// sound_button
+			// MuteButton
 			// 
-			this->sound_button->AutoSizeMode = System::Windows::Forms::AutoSizeMode::GrowAndShrink;
-			this->sound_button->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(43)), static_cast<System::Int32>(static_cast<System::Byte>(43)),
+			this->MuteButton->AutoSizeMode = System::Windows::Forms::AutoSizeMode::GrowAndShrink;
+			this->MuteButton->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(43)), static_cast<System::Int32>(static_cast<System::Byte>(43)),
 				static_cast<System::Int32>(static_cast<System::Byte>(43)));
-			this->sound_button->Dock = System::Windows::Forms::DockStyle::Left;
-			this->sound_button->FlatAppearance->BorderSize = 0;
-			this->sound_button->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			this->sound_button->ForeColor = System::Drawing::Color::White;
-			this->sound_button->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"sound_button.Image")));
-			this->sound_button->ImageAlign = System::Drawing::ContentAlignment::MiddleLeft;
-			this->sound_button->Location = System::Drawing::Point(0, 0);
-			this->sound_button->Margin = System::Windows::Forms::Padding(0);
-			this->sound_button->Name = L"sound_button";
-			this->sound_button->Size = System::Drawing::Size(40, 50);
-			this->sound_button->TabIndex = 5;
-			this->sound_button->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
-			this->sound_button->TextImageRelation = System::Windows::Forms::TextImageRelation::ImageBeforeText;
-			this->sound_button->UseVisualStyleBackColor = false;
+			this->MuteButton->Dock = System::Windows::Forms::DockStyle::Left;
+			this->MuteButton->FlatAppearance->BorderSize = 0;
+			this->MuteButton->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			this->MuteButton->ForeColor = System::Drawing::Color::White;
+			this->MuteButton->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"MuteButton.Image")));
+			this->MuteButton->ImageAlign = System::Drawing::ContentAlignment::MiddleLeft;
+			this->MuteButton->Location = System::Drawing::Point(0, 0);
+			this->MuteButton->Margin = System::Windows::Forms::Padding(0);
+			this->MuteButton->Name = L"MuteButton";
+			this->MuteButton->Size = System::Drawing::Size(40, 50);
+			this->MuteButton->TabIndex = 5;
+			this->MuteButton->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
+			this->MuteButton->TextImageRelation = System::Windows::Forms::TextImageRelation::ImageBeforeText;
+			this->MuteButton->UseVisualStyleBackColor = false;
+			this->MuteButton->Click += gcnew System::EventHandler(this, &MainForm::MuteButton_Click);
 			// 
 			// panel2
 			// 
@@ -967,7 +975,7 @@ namespace Vinil {
 			for (size_t i = 0; i < paths->size(); i++) {
 				/*TagLib::FileRef FR(paths->at(i).c_str());
 				if (!FR.isNull() && !FR.tag()->title().isEmpty() && FR.audioProperties() != nullptr)*/
-					this->Invoke(US, gcnew SongContainer(&paths->at(i)));
+				this->Invoke(US, gcnew SongContainer(&paths->at(i)));
 			}
 		}
 		catch (...) {
@@ -998,8 +1006,23 @@ namespace Vinil {
 	private: System::Void SongListBtn_Click(System::Object^ sender, System::EventArgs^ e) {
 		DisplaySongs();
 	}
-private: System::Void VolumeSlider_Scroll(System::Object^ sender, System::EventArgs^ e) {
-	MusicOperator::SetVolume(this->VolumeSlider->Value);
-}
-};
+
+	private: System::Void VolumeSlider_Scroll(System::Object^ sender, System::EventArgs^ e) {
+		if (!muted) {
+			MusicOperator::SetVolume(this->VolumeSlider->Value);
+		}
+	}
+
+	private: System::Void MuteButton_Click(System::Object^ sender, System::EventArgs^ e) {
+		if (!muted) {
+			this->MuteButton->Image = (cli::safe_cast<System::Drawing::Image^>(this->res->GetObject(L"NO Sound.Image")));
+			this->muted = true;
+			MusicOperator::SetVolume(0);
+		}else {
+			this->muted = false;
+			MusicOperator::SetVolume(this->VolumeSlider->Value);
+			this->MuteButton->Image = (cli::safe_cast<System::Drawing::Image^>(this->res->GetObject(L"MuteButton.Image")));
+		}
+	}
+	};
 }

@@ -17,6 +17,11 @@ void MusicOperator::SetVolume(int volume)
 	player.setVolume(volume);
 }
 
+float MusicOperator::GetVolume()
+{
+	return player.getVolume();
+}
+
 void MusicOperator::Pause()
 {
 	player.pause();

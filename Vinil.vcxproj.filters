@@ -51,4 +51,15 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="SoundMute.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="SoundMute.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\Icons\NO Sound.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
 </Project>

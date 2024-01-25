@@ -125,6 +125,16 @@
         9oMAAgg8FfBi9VShWVuLF3MDCCCAwLjA7EsG8AEiB5pn0UHE6fpIAAAAAElFTkSuQmCC
 </value>
   </data>
+  <data name="MuteButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
+        DAAACwwBP0AiyAAAAOlJREFUWEftlmENwjAUhCdhDpgEJCABCXPAHIAEHIATJCBhEpAwvmuOZGHlx8ja
+        hdAvuTTvuvUdbdJRFQqFJRiGoUY7l3mh8RE90M1WHvSLUa/GqM0WgEaNm6p52HaN8sIDqaCBzvm13Sfb
+        AepoADy9830wLezxgNT4jOowOULPoVgA7Vbvcj56GW2Q2NqewFz6ALaiMF0ClAB/EAAa2xOYSxZg71F3
+        vcJc0CQIXpoAY7yYbkIF6WwHqD8F0FV8d7kMLKggV6Qgrb1ogKSouUPoWPJ9jt+hcecg6wQQNNexrPOX
+        rFD4carqCTiWs9VSX/JdAAAAAElFTkSuQmCC
+</value>
+  </data>
   <data name="pictureBox1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAJwAAACcCAYAAACKuMJNAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
@@ -220,16 +230,6 @@
         quoMgyq8x66DUCgAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="sound_button.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        DAAACwwBP0AiyAAAAOlJREFUWEftlmENwjAUhCdhDpgEJCABCXPAHIAEHIATJCBhEpAwvmuOZGHlx8ja
-        hdAvuTTvuvUdbdJRFQqFJRiGoUY7l3mh8RE90M1WHvSLUa/GqM0WgEaNm6p52HaN8sIDqaCBzvm13Sfb
-        AepoADy9830wLezxgNT4jOowOULPoVgA7Vbvcj56GW2Q2NqewFz6ALaiMF0ClAB/EAAa2xOYSxZg71F3
-        vcJc0CQIXpoAY7yYbkIF6WwHqD8F0FV8d7kMLKggV6Qgrb1ogKSouUPoWPJ9jt+hcecg6wQQNNexrPOX
-        rFD4carqCTiWs9VSX/JdAAAAAElFTkSuQmCC
-</value>
-  </data>
   <data name="pictureBox2.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAJwAAACcCAYAAACKuMJNAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
@@ -291,9 +291,9 @@
         CCGEEEIIIYQQQgjRHPvs8z8cka2O71065gAAAABJRU5ErkJggg==
 </value>
   </data>
-  <metadata name="backgroundWorker1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+  <data name="backgroundWorker1.TrayLocation" type="System.Drawing.Point, System.Drawing">
     <value>17, 17</value>
-  </metadata>
+  </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAEAnJwAAAEAIACYiAEAFgAAACgAAACcAAAAOAEAAAEAIAAAAAAAQHwBACMuAAAjLgAAAAAAAAAA
@@ -1973,5 +1973,9 @@
         ///////w//////////////////////////D/////////////////////////8P//////////////////
         ///////w//////////////////////////A=
 </value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="NO Sound.Image" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Icons\NO Sound.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
