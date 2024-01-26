@@ -61,5 +61,8 @@
     <Image Include="..\Icons\NO Sound.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="Image1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

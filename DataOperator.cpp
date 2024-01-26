@@ -2,6 +2,7 @@
 
 static std::vector<std::string> v_dirs;
 static std::vector<std::string> v_musicPaths;
+static std::vector<std::string> v_currentPlay;
 
 size_t DataOperator::ReadDataFolders() {
 	v_dirs.clear();

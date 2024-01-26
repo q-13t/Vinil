@@ -117,11 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <metadata name="SongCheckBox.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>504, 17</value>
+  </metadata>
+  <metadata name="SongPlayButton.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>365, 17</value>
+  </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="SongPlayButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        EgAACxIB0t1+/AAAAQxJREFUWEftlO0NgjAYhBnBERyBERiBEdzAEWQD3UA3cARHcARHcAR8LjlMSTB8
+        EQAACxEBf2RfkQAAAQxJREFUWEftlO0NgjAYhBnBERyBERiBEdzAEWQD3UA3cARHcARHcAR8LjlMSTB8
         lf6xT3IB3jbvXUuhyGQyY7Rtu5f8mB7Mb0icXEoLxgrQ+PpCtYfSYOOD7w8OcUVpXgtG3wAdPGtHFKRX
         34ShAIKaDqdCPHXvcnxoPhigQ2NIQbY5pGMBBOPaDc2Lf0jdeNK71jyHiHdIaTQ5QAfzL0hBSpeWMzcA
         cyub39HO5eXQZFIAmaEzknnl8npoNhpAhjbW1q9fdQgNfwaQGYq/6hAaDwagVts4/qpDaN4LIDOkA7bd
@@ -129,4 +135,16 @@
         YII=
 </value>
   </data>
+  <metadata name="SongTitle.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>262, 17</value>
+  </metadata>
+  <metadata name="SongAuthor.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>144, 17</value>
+  </metadata>
+  <metadata name="SongDuration.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <metadata name="$this.TrayLargeIcon" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>False</value>
+  </metadata>
 </root>

@@ -192,6 +192,7 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\Icons\NO Sound.png" />
+    <Image Include="Image1.png" />
     <Image Include="SoundMute.bmp" />
     <Image Include="SoundMute.png" />
   </ItemGroup>
