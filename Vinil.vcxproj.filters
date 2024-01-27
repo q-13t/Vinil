@@ -30,6 +30,9 @@
     <ClCompile Include="MusicOperator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MainForm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainForm.h">
@@ -62,6 +65,12 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="Image1.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\Icons\Pause.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="button5.Image.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

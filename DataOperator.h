@@ -12,7 +12,7 @@ struct DataOperator {
 
 	static std::vector<std::string>* GetSongpaths();
 
-	static std::vector<std::string>* getMusicPaths();
+	static std::vector<std::string>* getReadyMusicPaths();
 
 	static void SaveDataFolders(const std::vector<std::string>* dirs);
 

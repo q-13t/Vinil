@@ -140,7 +140,7 @@
   <data name="SongListBtn.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        DwAACw8BkvkDpQAAAJhJREFUWEftlsENgCAMRRmBDWQUR3Az3cBRHIVR8H8CBg3hYEglsS/5aemhvBNq
+        DAAACwwBP0AiyAAAAJhJREFUWEftlsENgCAMRRmBDWQUR3Az3cBRHIVR8H8CBg3hYEglsS/5aemhvBNq
         FEV5QwjBIms6yoPLHeLTUR4VGEoA9YhDSR4CIQ4lGVIAZUMse5Ln3cHeGakJeGRiT/K8O1wMxhVAXDnv
         DheDlkCu/QSwix+fJfVEXOB2IfiRABcBFfhUYEeuX7DaOdX4FBc1zhVFaWPMCQwU7NATZl73AAAAAElF
         TkSuQmCC
@@ -167,7 +167,7 @@
         9oMAAgg8FfBi9VShWVuLF3MDCCCAwLjA7EsG8AEiB5pn0UHE6fpIAAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="button7.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="LoopButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
         DAAACwwBP0AiyAAAALVJREFUWEftldERgjAQRFMCJVACJVgCHWkHlqAdaCeUYAmWEN8y94F+ZYjefXhv
@@ -176,7 +176,7 @@
         FuJu0xgI4H8Qk+SPKOUF7diegv7njvwAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="button6.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="Nextbutton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
         DAAACwwBP0AiyAAAASdJREFUWEftluENgjAUhBmBDXQERmAEN5ANdAPcQDfQDRzBERzBERwB78g9EoJY
@@ -187,7 +187,7 @@
         NQoLhcIKVfUB2bDX2sARAyYAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="button3.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="PlayButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
         DAAACwwBP0AiyAAAAQxJREFUWEftlO0NgjAYhBnBERyBERiBEdzAEWQD3UA3cARHcARHcAR8LjlMSTB8
@@ -198,7 +198,7 @@
         YII=
 </value>
   </data>
-  <data name="button2.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="Previousbutton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
         DAAACwwBP0AiyAAAATNJREFUWEftllERwjAQRCsBByABCUhAAg7AATgAB+AACUhAAhKQUN52Nv2hkHLT
@@ -209,7 +209,7 @@
         bVKn4jBI6G8V/fRruXRYqVQ+0DQvWXLX2WGDyboAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="button1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="ShuffleButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
         DAAACwwBP0AiyAAAASFJREFUWEftlQ0NwjAQhScBCUhAAk7AAThAAhLAARKQMglIGN8j78j4G2sHCyH9
@@ -223,7 +223,7 @@
   <data name="MuteButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAL
-        DQAACw0B7QfALAAAAOlJREFUWEftlmENwjAUhCdhDpgEJCABCXPAHIAEHIATJCBhEpAwvmuOZGHlx8ja
+        DAAACwwBP0AiyAAAAOlJREFUWEftlmENwjAUhCdhDpgEJCABCXPAHIAEHIATJCBhEpAwvmuOZGHlx8ja
         hdAvuTTvuvUdbdJRFQqFJRiGoUY7l3mh8RE90M1WHvSLUa/GqM0WgEaNm6p52HaN8sIDqaCBzvm13Sfb
         AepoADy9830wLezxgNT4jOowOULPoVgA7Vbvcj56GW2Q2NqewFz6ALaiMF0ClAB/EAAa2xOYSxZg71F3
         vcJc0CQIXpoAY7yYbkIF6WwHqD8F0FV8d7kMLKggV6Qgrb1ogKSouUPoWPJ9jt+hcecg6wQQNNexrPOX

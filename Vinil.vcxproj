@@ -159,6 +159,7 @@
   <ItemGroup>
     <ClCompile Include="DirPathContainer.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MainForm.cpp" />
     <ClCompile Include="MusicOperator.cpp" />
     <ClCompile Include="SongContainer.cpp" />
   </ItemGroup>
@@ -192,6 +193,8 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\Icons\NO Sound.png" />
+    <Image Include="..\Icons\Pause.png" />
+    <Image Include="button5.Image.png" />
     <Image Include="Image1.png" />
     <Image Include="SoundMute.bmp" />
     <Image Include="SoundMute.png" />

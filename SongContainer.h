@@ -12,7 +12,7 @@ namespace Vinil {
 	using namespace System::Drawing;
 
 
-	public ref class SongContainer : public System::Windows::Forms::TableLayoutPanel{
+	public ref class SongContainer : public System::Windows::Forms::TableLayoutPanel {
 	public:
 		SongContainer(void) {
 			InitializeComponent();
@@ -174,6 +174,7 @@ namespace Vinil {
 	}
 	private: System::Void SongPlayButton_Click(System::Object^ sender, System::EventArgs^ e) {
 		MusicOperator::PlayFromPath((char*)(Runtime::InteropServices::Marshal::StringToHGlobalAnsi(this->path)).ToPointer());
+		//MainForm::PlayButton->PerformClick();
 	}
 	public: System::String^ getPath() {
 		return this->path;
@@ -182,6 +183,12 @@ namespace Vinil {
 		return FR;
 	}
 	private: System::Void SongCheckBox_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+	}
+	public: System::String^ getTitle() {
+		return SongTitle->Text;
+	}
+	public: System::String^ getAuthor() {
+		return SongAuthor->Text;
 	}
 	};
 }

@@ -56,22 +56,18 @@ namespace Vinil {
 	private: System::Windows::Forms::TrackBar^ VolumeSlider;
 	private: System::Windows::Forms::Button^ MuteButton;
 	public: System::Windows::Forms::Label^ SongDurationCurrent;
+	public: System::Windows::Forms::Label^ SongDurationTotal;
+	private: System::Windows::Forms::Panel^ panel3;
+	private: System::Windows::Forms::Button^ Previousbutton;
+	private: System::Windows::Forms::Button^ ShuffleButton;
+	private: System::Windows::Forms::Button^ LoopButton;
+	private: System::Windows::Forms::Button^ Nextbutton;
+	public: static System::Windows::Forms::Button^ PlayButton;
 	private:
 
-	public:
-	public: System::Windows::Forms::Label^ SongDurationTotal;
-	private:
-	private: System::Windows::Forms::Panel^ panel3;
-	public:
-	private: System::Windows::Forms::Button^ button2;
-	private: System::Windows::Forms::Button^ button1;
-	private: System::Windows::Forms::Button^ button7;
-	private: System::Windows::Forms::Button^ button6;
-	private: System::Windows::Forms::Button^ button3;
 	private: System::Windows::Forms::FlowLayoutPanel^ flowLayoutPanel2;
 	private: System::Windows::Forms::Panel^ panel4;
 	private: System::ComponentModel::BackgroundWorker^ SongFiller;
-
 	private: System::Windows::Forms::Button^ AddDirButton;
 	private: System::Windows::Forms::TableLayoutPanel^ LinearLayoutDirContainer;
 	private: System::Windows::Forms::Panel^ SettingPanel;
@@ -88,6 +84,9 @@ namespace Vinil {
 		/// Required designer variable.
 		/// </summary>
 		bool muted = false;
+
+		   bool shuffle = MusicOperator::getShuffle();
+		   bool looped = MusicOperator::getLoop();
 		   System::ComponentModel::Container^ components;
 	private: System::ComponentModel::BackgroundWorker^ SongListener;
 	private: System::Windows::Forms::TrackBar^ SongProgress;
@@ -123,13 +122,14 @@ namespace Vinil {
 			   this->splitContainer4 = (gcnew System::Windows::Forms::SplitContainer());
 			   this->splitContainer5 = (gcnew System::Windows::Forms::SplitContainer());
 			   this->flowLayoutPanel2 = (gcnew System::Windows::Forms::FlowLayoutPanel());
-			   this->button7 = (gcnew System::Windows::Forms::Button());
-			   this->button6 = (gcnew System::Windows::Forms::Button());
-			   this->button3 = (gcnew System::Windows::Forms::Button());
-			   this->button2 = (gcnew System::Windows::Forms::Button());
-			   this->button1 = (gcnew System::Windows::Forms::Button());
+			   this->LoopButton = (gcnew System::Windows::Forms::Button());
+			   this->Nextbutton = (gcnew System::Windows::Forms::Button());
+			   this->PlayButton = (gcnew System::Windows::Forms::Button());
+			   this->Previousbutton = (gcnew System::Windows::Forms::Button());
+			   this->ShuffleButton = (gcnew System::Windows::Forms::Button());
 			   this->panel4 = (gcnew System::Windows::Forms::Panel());
 			   this->SongDurationCurrent = (gcnew System::Windows::Forms::Label());
+			   this->SongProgress = (gcnew System::Windows::Forms::TrackBar());
 			   this->SongDurationTotal = (gcnew System::Windows::Forms::Label());
 			   this->panel3 = (gcnew System::Windows::Forms::Panel());
 			   this->VolumeSlider = (gcnew System::Windows::Forms::TrackBar());
@@ -141,7 +141,6 @@ namespace Vinil {
 			   this->SongAlbumImage = (gcnew System::Windows::Forms::PictureBox());
 			   this->SongFiller = (gcnew System::ComponentModel::BackgroundWorker());
 			   this->SongListener = (gcnew System::ComponentModel::BackgroundWorker());
-			   this->SongProgress = (gcnew System::Windows::Forms::TrackBar());
 			   (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->splitContainer1))->BeginInit();
 			   this->splitContainer1->Panel1->SuspendLayout();
 			   this->splitContainer1->Panel2->SuspendLayout();
@@ -164,6 +163,7 @@ namespace Vinil {
 			   this->splitContainer5->SuspendLayout();
 			   this->flowLayoutPanel2->SuspendLayout();
 			   this->panel4->SuspendLayout();
+			   (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->SongProgress))->BeginInit();
 			   this->panel3->SuspendLayout();
 			   (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->VolumeSlider))->BeginInit();
 			   this->panel2->SuspendLayout();
@@ -172,7 +172,6 @@ namespace Vinil {
 			   this->splitContainer3->Panel2->SuspendLayout();
 			   this->splitContainer3->SuspendLayout();
 			   (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->SongAlbumImage))->BeginInit();
-			   (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->SongProgress))->BeginInit();
 			   this->SuspendLayout();
 			   // 
 			   // splitContainer1
@@ -499,6 +498,7 @@ namespace Vinil {
 			   // 
 			   this->splitContainer4->Dock = System::Windows::Forms::DockStyle::Fill;
 			   this->splitContainer4->FixedPanel = System::Windows::Forms::FixedPanel::Panel2;
+			   this->splitContainer4->IsSplitterFixed = true;
 			   this->splitContainer4->Location = System::Drawing::Point(200, 0);
 			   this->splitContainer4->Name = L"splitContainer4";
 			   // 
@@ -538,116 +538,121 @@ namespace Vinil {
 			   this->flowLayoutPanel2->Anchor = System::Windows::Forms::AnchorStyles::None;
 			   this->flowLayoutPanel2->AutoSize = true;
 			   this->flowLayoutPanel2->AutoSizeMode = System::Windows::Forms::AutoSizeMode::GrowAndShrink;
-			   this->flowLayoutPanel2->Controls->Add(this->button7);
-			   this->flowLayoutPanel2->Controls->Add(this->button6);
-			   this->flowLayoutPanel2->Controls->Add(this->button3);
-			   this->flowLayoutPanel2->Controls->Add(this->button2);
-			   this->flowLayoutPanel2->Controls->Add(this->button1);
+			   this->flowLayoutPanel2->Controls->Add(this->LoopButton);
+			   this->flowLayoutPanel2->Controls->Add(this->Nextbutton);
+			   this->flowLayoutPanel2->Controls->Add(this->PlayButton);
+			   this->flowLayoutPanel2->Controls->Add(this->Previousbutton);
+			   this->flowLayoutPanel2->Controls->Add(this->ShuffleButton);
 			   this->flowLayoutPanel2->FlowDirection = System::Windows::Forms::FlowDirection::RightToLeft;
 			   this->flowLayoutPanel2->Location = System::Drawing::Point(305, -7);
 			   this->flowLayoutPanel2->Name = L"flowLayoutPanel2";
 			   this->flowLayoutPanel2->Size = System::Drawing::Size(190, 38);
 			   this->flowLayoutPanel2->TabIndex = 11;
 			   // 
-			   // button7
+			   // LoopButton
 			   // 
-			   this->button7->AutoSize = true;
-			   this->button7->AutoSizeMode = System::Windows::Forms::AutoSizeMode::GrowAndShrink;
-			   this->button7->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(43)), static_cast<System::Int32>(static_cast<System::Byte>(43)),
+			   this->LoopButton->AutoSize = true;
+			   this->LoopButton->AutoSizeMode = System::Windows::Forms::AutoSizeMode::GrowAndShrink;
+			   this->LoopButton->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(43)), static_cast<System::Int32>(static_cast<System::Byte>(43)),
 				   static_cast<System::Int32>(static_cast<System::Byte>(43)));
-			   this->button7->FlatAppearance->BorderSize = 0;
-			   this->button7->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			   this->button7->ForeColor = System::Drawing::Color::White;
-			   this->button7->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"button7.Image")));
-			   this->button7->ImageAlign = System::Drawing::ContentAlignment::MiddleLeft;
-			   this->button7->Location = System::Drawing::Point(152, 0);
-			   this->button7->Margin = System::Windows::Forms::Padding(0);
-			   this->button7->Name = L"button7";
-			   this->button7->Size = System::Drawing::Size(38, 38);
-			   this->button7->TabIndex = 10;
-			   this->button7->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
-			   this->button7->TextImageRelation = System::Windows::Forms::TextImageRelation::ImageBeforeText;
-			   this->button7->UseVisualStyleBackColor = false;
+			   this->LoopButton->FlatAppearance->BorderSize = 0;
+			   this->LoopButton->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			   this->LoopButton->ForeColor = System::Drawing::Color::White;
+			   this->LoopButton->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"LoopButton.Image")));
+			   this->LoopButton->ImageAlign = System::Drawing::ContentAlignment::MiddleLeft;
+			   this->LoopButton->Location = System::Drawing::Point(152, 0);
+			   this->LoopButton->Margin = System::Windows::Forms::Padding(0);
+			   this->LoopButton->Name = L"LoopButton";
+			   this->LoopButton->Size = System::Drawing::Size(38, 38);
+			   this->LoopButton->TabIndex = 10;
+			   this->LoopButton->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
+			   this->LoopButton->TextImageRelation = System::Windows::Forms::TextImageRelation::ImageBeforeText;
+			   this->LoopButton->UseVisualStyleBackColor = false;
+			   this->LoopButton->Click += gcnew System::EventHandler(this, &MainForm::LoopButton_Click);
 			   // 
-			   // button6
+			   // Nextbutton
 			   // 
-			   this->button6->AutoSize = true;
-			   this->button6->AutoSizeMode = System::Windows::Forms::AutoSizeMode::GrowAndShrink;
-			   this->button6->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(43)), static_cast<System::Int32>(static_cast<System::Byte>(43)),
+			   this->Nextbutton->AutoSize = true;
+			   this->Nextbutton->AutoSizeMode = System::Windows::Forms::AutoSizeMode::GrowAndShrink;
+			   this->Nextbutton->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(43)), static_cast<System::Int32>(static_cast<System::Byte>(43)),
 				   static_cast<System::Int32>(static_cast<System::Byte>(43)));
-			   this->button6->FlatAppearance->BorderSize = 0;
-			   this->button6->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			   this->button6->ForeColor = System::Drawing::Color::White;
-			   this->button6->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"button6.Image")));
-			   this->button6->ImageAlign = System::Drawing::ContentAlignment::MiddleLeft;
-			   this->button6->Location = System::Drawing::Point(114, 0);
-			   this->button6->Margin = System::Windows::Forms::Padding(0);
-			   this->button6->Name = L"button6";
-			   this->button6->Size = System::Drawing::Size(38, 38);
-			   this->button6->TabIndex = 9;
-			   this->button6->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
-			   this->button6->TextImageRelation = System::Windows::Forms::TextImageRelation::ImageBeforeText;
-			   this->button6->UseVisualStyleBackColor = false;
+			   this->Nextbutton->FlatAppearance->BorderSize = 0;
+			   this->Nextbutton->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			   this->Nextbutton->ForeColor = System::Drawing::Color::White;
+			   this->Nextbutton->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"Nextbutton.Image")));
+			   this->Nextbutton->ImageAlign = System::Drawing::ContentAlignment::MiddleLeft;
+			   this->Nextbutton->Location = System::Drawing::Point(114, 0);
+			   this->Nextbutton->Margin = System::Windows::Forms::Padding(0);
+			   this->Nextbutton->Name = L"Nextbutton";
+			   this->Nextbutton->Size = System::Drawing::Size(38, 38);
+			   this->Nextbutton->TabIndex = 9;
+			   this->Nextbutton->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
+			   this->Nextbutton->TextImageRelation = System::Windows::Forms::TextImageRelation::ImageBeforeText;
+			   this->Nextbutton->UseVisualStyleBackColor = false;
+			   this->Nextbutton->Click += gcnew System::EventHandler(this, &MainForm::Nextbutton_Click);
 			   // 
-			   // button3
+			   // PlayButton
 			   // 
-			   this->button3->AutoSize = true;
-			   this->button3->AutoSizeMode = System::Windows::Forms::AutoSizeMode::GrowAndShrink;
-			   this->button3->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(43)), static_cast<System::Int32>(static_cast<System::Byte>(43)),
+			   this->PlayButton->AutoSize = true;
+			   this->PlayButton->AutoSizeMode = System::Windows::Forms::AutoSizeMode::GrowAndShrink;
+			   this->PlayButton->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(43)), static_cast<System::Int32>(static_cast<System::Byte>(43)),
 				   static_cast<System::Int32>(static_cast<System::Byte>(43)));
-			   this->button3->FlatAppearance->BorderSize = 0;
-			   this->button3->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			   this->button3->ForeColor = System::Drawing::Color::White;
-			   this->button3->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"button3.Image")));
-			   this->button3->ImageAlign = System::Drawing::ContentAlignment::MiddleLeft;
-			   this->button3->Location = System::Drawing::Point(76, 0);
-			   this->button3->Margin = System::Windows::Forms::Padding(0);
-			   this->button3->Name = L"button3";
-			   this->button3->Size = System::Drawing::Size(38, 38);
-			   this->button3->TabIndex = 8;
-			   this->button3->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
-			   this->button3->TextImageRelation = System::Windows::Forms::TextImageRelation::ImageBeforeText;
-			   this->button3->UseVisualStyleBackColor = false;
+			   this->PlayButton->FlatAppearance->BorderSize = 0;
+			   this->PlayButton->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			   this->PlayButton->ForeColor = System::Drawing::Color::White;
+			   this->PlayButton->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"PlayButton.Image")));
+			   this->PlayButton->ImageAlign = System::Drawing::ContentAlignment::MiddleLeft;
+			   this->PlayButton->Location = System::Drawing::Point(76, 0);
+			   this->PlayButton->Margin = System::Windows::Forms::Padding(0);
+			   this->PlayButton->Name = L"PlayButton";
+			   this->PlayButton->Size = System::Drawing::Size(38, 38);
+			   this->PlayButton->TabIndex = 8;
+			   this->PlayButton->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
+			   this->PlayButton->TextImageRelation = System::Windows::Forms::TextImageRelation::ImageBeforeText;
+			   this->PlayButton->UseVisualStyleBackColor = false;
+			   this->PlayButton->Click += gcnew System::EventHandler(this, &MainForm::PlayButton_Click);
 			   // 
-			   // button2
+			   // Previousbutton
 			   // 
-			   this->button2->AutoSize = true;
-			   this->button2->AutoSizeMode = System::Windows::Forms::AutoSizeMode::GrowAndShrink;
-			   this->button2->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(43)), static_cast<System::Int32>(static_cast<System::Byte>(43)),
+			   this->Previousbutton->AutoSize = true;
+			   this->Previousbutton->AutoSizeMode = System::Windows::Forms::AutoSizeMode::GrowAndShrink;
+			   this->Previousbutton->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(43)), static_cast<System::Int32>(static_cast<System::Byte>(43)),
 				   static_cast<System::Int32>(static_cast<System::Byte>(43)));
-			   this->button2->FlatAppearance->BorderSize = 0;
-			   this->button2->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			   this->button2->ForeColor = System::Drawing::Color::White;
-			   this->button2->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"button2.Image")));
-			   this->button2->ImageAlign = System::Drawing::ContentAlignment::MiddleLeft;
-			   this->button2->Location = System::Drawing::Point(38, 0);
-			   this->button2->Margin = System::Windows::Forms::Padding(0);
-			   this->button2->Name = L"button2";
-			   this->button2->Size = System::Drawing::Size(38, 38);
-			   this->button2->TabIndex = 7;
-			   this->button2->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
-			   this->button2->TextImageRelation = System::Windows::Forms::TextImageRelation::ImageBeforeText;
-			   this->button2->UseVisualStyleBackColor = false;
+			   this->Previousbutton->FlatAppearance->BorderSize = 0;
+			   this->Previousbutton->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			   this->Previousbutton->ForeColor = System::Drawing::Color::White;
+			   this->Previousbutton->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"Previousbutton.Image")));
+			   this->Previousbutton->ImageAlign = System::Drawing::ContentAlignment::MiddleLeft;
+			   this->Previousbutton->Location = System::Drawing::Point(38, 0);
+			   this->Previousbutton->Margin = System::Windows::Forms::Padding(0);
+			   this->Previousbutton->Name = L"Previousbutton";
+			   this->Previousbutton->Size = System::Drawing::Size(38, 38);
+			   this->Previousbutton->TabIndex = 7;
+			   this->Previousbutton->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
+			   this->Previousbutton->TextImageRelation = System::Windows::Forms::TextImageRelation::ImageBeforeText;
+			   this->Previousbutton->UseVisualStyleBackColor = false;
+			   this->Previousbutton->Click += gcnew System::EventHandler(this, &MainForm::Previousbutton_Click);
 			   // 
-			   // button1
+			   // ShuffleButton
 			   // 
-			   this->button1->AutoSize = true;
-			   this->button1->AutoSizeMode = System::Windows::Forms::AutoSizeMode::GrowAndShrink;
-			   this->button1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(43)), static_cast<System::Int32>(static_cast<System::Byte>(43)),
+			   this->ShuffleButton->AutoSize = true;
+			   this->ShuffleButton->AutoSizeMode = System::Windows::Forms::AutoSizeMode::GrowAndShrink;
+			   this->ShuffleButton->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(43)), static_cast<System::Int32>(static_cast<System::Byte>(43)),
 				   static_cast<System::Int32>(static_cast<System::Byte>(43)));
-			   this->button1->FlatAppearance->BorderSize = 0;
-			   this->button1->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
-			   this->button1->ForeColor = System::Drawing::Color::White;
-			   this->button1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"button1.Image")));
-			   this->button1->ImageAlign = System::Drawing::ContentAlignment::MiddleLeft;
-			   this->button1->Location = System::Drawing::Point(0, 0);
-			   this->button1->Margin = System::Windows::Forms::Padding(0);
-			   this->button1->Name = L"button1";
-			   this->button1->Size = System::Drawing::Size(38, 38);
-			   this->button1->TabIndex = 6;
-			   this->button1->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
-			   this->button1->TextImageRelation = System::Windows::Forms::TextImageRelation::ImageBeforeText;
-			   this->button1->UseVisualStyleBackColor = false;
+			   this->ShuffleButton->FlatAppearance->BorderSize = 0;
+			   this->ShuffleButton->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
+			   this->ShuffleButton->ForeColor = System::Drawing::Color::White;
+			   this->ShuffleButton->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"ShuffleButton.Image")));
+			   this->ShuffleButton->ImageAlign = System::Drawing::ContentAlignment::MiddleLeft;
+			   this->ShuffleButton->Location = System::Drawing::Point(0, 0);
+			   this->ShuffleButton->Margin = System::Windows::Forms::Padding(0);
+			   this->ShuffleButton->Name = L"ShuffleButton";
+			   this->ShuffleButton->Size = System::Drawing::Size(38, 38);
+			   this->ShuffleButton->TabIndex = 6;
+			   this->ShuffleButton->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
+			   this->ShuffleButton->TextImageRelation = System::Windows::Forms::TextImageRelation::ImageBeforeText;
+			   this->ShuffleButton->UseVisualStyleBackColor = false;
+			   this->ShuffleButton->Click += gcnew System::EventHandler(this, &MainForm::ShuffleButton_Click);
 			   // 
 			   // panel4
 			   // 
@@ -672,6 +677,17 @@ namespace Vinil {
 			   this->SongDurationCurrent->TabIndex = 3;
 			   this->SongDurationCurrent->Text = L"3:12";
 			   this->SongDurationCurrent->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
+			   // 
+			   // SongProgress
+			   // 
+			   this->SongProgress->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Left)
+				   | System::Windows::Forms::AnchorStyles::Right));
+			   this->SongProgress->AutoSize = false;
+			   this->SongProgress->Location = System::Drawing::Point(67, 0);
+			   this->SongProgress->Name = L"SongProgress";
+			   this->SongProgress->Size = System::Drawing::Size(658, 20);
+			   this->SongProgress->TabIndex = 5;
+			   this->SongProgress->MouseDown += gcnew System::Windows::Forms::MouseEventHandler(this, &MainForm::SongProgress_MouseDown);
 			   // 
 			   // SongDurationTotal
 			   // 
@@ -808,18 +824,7 @@ namespace Vinil {
 			   this->SongListener->WorkerReportsProgress = true;
 			   this->SongListener->DoWork += gcnew System::ComponentModel::DoWorkEventHandler(this, &MainForm::SongListener_DoWork);
 			   this->SongListener->ProgressChanged += gcnew System::ComponentModel::ProgressChangedEventHandler(this, &MainForm::SongListener_ProgressChanged);
-			   // 
-			   // SongProgress
-			   // 
-			   this->SongProgress->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Left)
-				   | System::Windows::Forms::AnchorStyles::Right));
-			   this->SongProgress->AutoSize = false;
-			   this->SongProgress->Location = System::Drawing::Point(67, 0);
-			   this->SongProgress->Name = L"SongProgress";
-			   this->SongProgress->Size = System::Drawing::Size(658, 20);
-			   this->SongProgress->TabIndex = 5;
-
-			   this->SongProgress->MouseDown += gcnew System::Windows::Forms::MouseEventHandler(this, &MainForm::SongProgress_MouseDown);
+			   this->SongListener->RunWorkerCompleted += gcnew System::ComponentModel::RunWorkerCompletedEventHandler(this, &MainForm::SongListener_RunWorkerCompleted);
 			   // 
 			   // MainForm
 			   // 
@@ -866,6 +871,7 @@ namespace Vinil {
 			   this->flowLayoutPanel2->ResumeLayout(false);
 			   this->flowLayoutPanel2->PerformLayout();
 			   this->panel4->ResumeLayout(false);
+			   (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->SongProgress))->EndInit();
 			   this->panel3->ResumeLayout(false);
 			   this->panel3->PerformLayout();
 			   (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->VolumeSlider))->EndInit();
@@ -875,7 +881,6 @@ namespace Vinil {
 			   (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->splitContainer3))->EndInit();
 			   this->splitContainer3->ResumeLayout(false);
 			   (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->SongAlbumImage))->EndInit();
-			   (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->SongProgress))->EndInit();
 			   this->ResumeLayout(false);
 
 		   }
@@ -910,9 +915,9 @@ namespace Vinil {
 	}
 
 	private: System::Void MainForm_Load(System::Object^ sender, System::EventArgs^ e) {
-		SongListener->RunWorkerAsync();
+
 		DataOperator::ReadDataFolders();
-		if (DataOperator::getMusicPaths()->empty()) {
+		if (DataOperator::getReadyMusicPaths()->empty()) {
 			DisplaySettings();
 		}
 		else {
@@ -932,7 +937,7 @@ namespace Vinil {
 	}
 
 	private:  System::Void backgroundWorker1_RunWorkerCompleted(System::Object^ sender, System::ComponentModel::RunWorkerCompletedEventArgs^ e) {
-		if (DataOperator::getMusicPaths()->empty()) {
+		if (DataOperator::getReadyMusicPaths()->empty()) {
 			DisplaySettings();
 		}
 		else {
@@ -945,6 +950,7 @@ namespace Vinil {
 	private:  Void FillSongList(SongContainer^ el) {
 		MainSongLinearLayout->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 40)));
 		MainSongLinearLayout->Controls->Add(el);
+
 		MainSongLinearLayout->Update();
 	}
 	private: Void DisplaySettings() {
@@ -961,9 +967,11 @@ namespace Vinil {
 	private: Void DisplaySongs() {
 		SettingPanel->Visible = false;
 		SongsPanel->Visible = true;
+		MusicOperator::setPlayQueue(*(DataOperator::getReadyMusicPaths()));
 		Threading::Tasks::Task::Run(
 			gcnew System::Action(this, &MainForm::DoSongsFill)
 		);
+
 		/*if (thread != nullptr) {
 			if (thread->IsAlive)
 				thread->Suspend();
@@ -977,9 +985,10 @@ namespace Vinil {
 	private: Void DoSongsFill() {
 		try {
 			UpdateSongsDelegate^ US = gcnew UpdateSongsDelegate(this, &MainForm::FillSongList);
-			auto paths = DataOperator::getMusicPaths();
+			auto paths = DataOperator::getReadyMusicPaths();
 			for (size_t i = 0; i < paths->size(); i++) {
 				SongContainer^ SC = gcnew SongContainer(&paths->at(i));
+				if (SC->getAuthor()->Equals("Author") && SC->getTitle()->Equals("Title"))continue;
 				if (i % 2 == 0) SC->BackColor = Color::FromArgb(43, 43, 43);
 				this->Invoke(US, SC);
 			}
@@ -1029,18 +1038,23 @@ namespace Vinil {
 			this->MuteButton->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"MuteButton.Image")));
 		}
 	}
-	public:  void StartPlay(SongContainer^ SC) {
-		//SongTitle->Text = SC->SongTitle->Text;
-		//SongAuthor->Text = SC->SongAuthor->Text;
-		//SongDurationTotal->Text = SC->SongDuration->Text;
-		//SongDurationCurrent->Text = "0";
-		//MusicOperator::PlayFromPath((char*)(Runtime::InteropServices::Marshal::StringToHGlobalAnsi(SC->getPath())).ToPointer());
-	}
+
 	private: System::Void SongListener_DoWork(System::Object^ sender, System::ComponentModel::DoWorkEventArgs^ e) {
-		while (true) {
+		while (MusicOperator::getStatus() == sf::Music::Status::Playing) {
 			SongListener->ReportProgress(MusicOperator::getOfset());
 			System::Threading::Thread::Sleep(1000);
 		}
+	}
+	private: System::Void SongListener_RunWorkerCompleted(System::Object^ sender, System::ComponentModel::RunWorkerCompletedEventArgs^ e) {
+		if (MusicOperator::getLoop()) {}
+		else if (MusicOperator::getShuffle()) {
+			MusicOperator::playRandom();
+		}
+		else {
+			MusicOperator::playNext();
+		}
+		MusicOperator::Play();
+		SongListener->RunWorkerAsync();
 	}
 
 	private: System::Void SongListener_ProgressChanged(System::Object^ sender, System::ComponentModel::ProgressChangedEventArgs^ e) {
@@ -1063,5 +1077,58 @@ namespace Vinil {
 	private: System::Void SongProgress_MouseDown(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
 		MusicOperator::setOfset(SongProgress->Value);
 	}
+
+
+	private: System::Void PlayButton_Click(System::Object^ sender, System::EventArgs^ e) {
+		System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(MainForm::typeid));
+		if (MusicOperator::getStatus() == sf::Music::Status::Playing) {
+			MusicOperator::Pause();
+			MusicOperator::setStopped(true);
+			//PlayButton->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"button5.Image")));
+		}
+		else  if (MusicOperator::getStatus() == sf::Music::Status::Paused || MusicOperator::getStatus() == sf::Music::Status::Stopped) {
+			MusicOperator::Play();
+			SongListener->RunWorkerAsync();
+			MusicOperator::setStopped(false);
+			//PlayButton->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"Pause.Image")));
+		}
+	}
+	private: System::Void Nextbutton_Click(System::Object^ sender, System::EventArgs^ e) {
+		MusicOperator::playNext();
+	}
+	private: System::Void LoopButton_Click(System::Object^ sender, System::EventArgs^ e) {
+		if (!looped) {
+			MusicOperator::setLoop(true);
+			looped = true;
+			LoopButton->BackColor = Color::Black;
+		}
+		else {
+			MusicOperator::setLoop(false);
+			looped = false;
+			LoopButton->BackColor = Color::FromArgb(43, 43, 43);
+		}
+	}
+	private: System::Void ShuffleButton_Click(System::Object^ sender, System::EventArgs^ e) {
+		if (!shuffle) {
+			MusicOperator::setShuffle(true);
+			shuffle = true;
+			ShuffleButton->BackColor = Color::Black;
+		}
+		else {
+			MusicOperator::setShuffle(false);
+			shuffle = false;
+			ShuffleButton->BackColor = Color::FromArgb(43, 43, 43);
+
+		}
+	}
+	private: System::Void Previousbutton_Click(System::Object^ sender, System::EventArgs^ e) {
+		if (MusicOperator::getPlayPercentage() < 0.1) {
+			MusicOperator::playPrevious();
+		}
+		else {
+			MusicOperator::setOfset(0);
+		}
+	}
+
 	};
 }

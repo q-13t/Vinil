@@ -33,7 +33,7 @@ std::vector<std::string>* DataOperator::GetSongpaths() {
 	return &v_musicPaths;
 }
 
-std::vector<std::string>* DataOperator::getMusicPaths() {
+std::vector<std::string>* DataOperator::getReadyMusicPaths() {
 	if (v_musicPaths.empty()) {
 		GetSongpaths();
 	}
