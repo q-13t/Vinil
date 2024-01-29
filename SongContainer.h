@@ -42,7 +42,6 @@ namespace Vinil {
 	public: System::Windows::Forms::Label^ SongDuration;
 	public: System::String^ path;
 	public: TagLib::FileRef* FR;
-		  //public: MainForm^ MF;
 
 
 	private:
@@ -79,7 +78,7 @@ namespace Vinil {
 			this->SongCheckBox->TabIndex = 0;
 			this->SongCheckBox->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
 			this->SongCheckBox->UseVisualStyleBackColor = false;
-			this->SongCheckBox->CheckedChanged += gcnew System::EventHandler(this, &SongContainer::SongCheckBox_CheckedChanged);
+			//this->SongCheckBox->CheckedChanged += gcnew System::EventHandler(this, &SongContainer::SongCheckBox_CheckedChanged);
 			// 
 			// SongPlayButton
 			// 
@@ -174,7 +173,6 @@ namespace Vinil {
 	}
 	private: System::Void SongPlayButton_Click(System::Object^ sender, System::EventArgs^ e) {
 		MusicOperator::PlayFromPath((char*)(Runtime::InteropServices::Marshal::StringToHGlobalAnsi(this->path)).ToPointer());
-		//MainForm::PlayButton->PerformClick();
 	}
 	public: System::String^ getPath() {
 		return this->path;

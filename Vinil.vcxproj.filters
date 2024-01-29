@@ -55,22 +55,16 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="SoundMute.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="SoundMute.png">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="..\Icons\NO Sound.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="Image1.png">
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="..\Icons\Pause.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="button5.Image.png">
+    <Image Include="resouces\Pause.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resouces\Play.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

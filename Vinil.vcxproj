@@ -194,10 +194,8 @@
   <ItemGroup>
     <Image Include="..\Icons\NO Sound.png" />
     <Image Include="..\Icons\Pause.png" />
-    <Image Include="button5.Image.png" />
-    <Image Include="Image1.png" />
-    <Image Include="SoundMute.bmp" />
-    <Image Include="SoundMute.png" />
+    <Image Include="resouces\Pause.png" />
+    <Image Include="resouces\Play.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

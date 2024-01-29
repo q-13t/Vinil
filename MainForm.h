@@ -62,7 +62,9 @@ namespace Vinil {
 	private: System::Windows::Forms::Button^ ShuffleButton;
 	private: System::Windows::Forms::Button^ LoopButton;
 	private: System::Windows::Forms::Button^ Nextbutton;
-	public: static System::Windows::Forms::Button^ PlayButton;
+	public: System::Windows::Forms::Button^ PlayButton;
+	private:
+
 	private:
 
 	private: System::Windows::Forms::FlowLayoutPanel^ flowLayoutPanel2;
@@ -89,6 +91,7 @@ namespace Vinil {
 		   bool looped = MusicOperator::getLoop();
 		   System::ComponentModel::Container^ components;
 	private: System::ComponentModel::BackgroundWorker^ SongListener;
+	private: System::ComponentModel::BackgroundWorker^ SongChangeListener;
 	private: System::Windows::Forms::TrackBar^ SongProgress;
 
 
@@ -141,6 +144,7 @@ namespace Vinil {
 			   this->SongAlbumImage = (gcnew System::Windows::Forms::PictureBox());
 			   this->SongFiller = (gcnew System::ComponentModel::BackgroundWorker());
 			   this->SongListener = (gcnew System::ComponentModel::BackgroundWorker());
+			   this->SongChangeListener = (gcnew System::ComponentModel::BackgroundWorker());
 			   (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->splitContainer1))->BeginInit();
 			   this->splitContainer1->Panel1->SuspendLayout();
 			   this->splitContainer1->Panel2->SuspendLayout();
@@ -826,6 +830,11 @@ namespace Vinil {
 			   this->SongListener->ProgressChanged += gcnew System::ComponentModel::ProgressChangedEventHandler(this, &MainForm::SongListener_ProgressChanged);
 			   this->SongListener->RunWorkerCompleted += gcnew System::ComponentModel::RunWorkerCompletedEventHandler(this, &MainForm::SongListener_RunWorkerCompleted);
 			   // 
+			   // SongChangeListener
+			   // 
+			   this->SongChangeListener->DoWork += gcnew System::ComponentModel::DoWorkEventHandler(this, &MainForm::SongChangeListener_DoWork);
+			   this->SongChangeListener->RunWorkerCompleted += gcnew System::ComponentModel::RunWorkerCompletedEventHandler(this, &MainForm::SongChangeListener_RunWorkerCompleted);
+			   // 
 			   // MainForm
 			   // 
 			   this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Inherit;
@@ -915,7 +924,7 @@ namespace Vinil {
 	}
 
 	private: System::Void MainForm_Load(System::Object^ sender, System::EventArgs^ e) {
-
+		SongChangeListener->RunWorkerAsync();
 		DataOperator::ReadDataFolders();
 		if (DataOperator::getReadyMusicPaths()->empty()) {
 			DisplaySettings();
@@ -1046,33 +1055,31 @@ namespace Vinil {
 		}
 	}
 	private: System::Void SongListener_RunWorkerCompleted(System::Object^ sender, System::ComponentModel::RunWorkerCompletedEventArgs^ e) {
-		if (MusicOperator::getLoop()) {}
-		else if (MusicOperator::getShuffle()) {
-			MusicOperator::playRandom();
+		if (!MusicOperator::getStopped()) {
+			if (MusicOperator::getLoop()) {}
+			else if (MusicOperator::getShuffle()) {
+				MusicOperator::playRandom();
+			}
+			else {
+				MusicOperator::playNext();
+			}
+			MusicOperator::Play();
+			if (!SongListener->IsBusy)
+				SongListener->RunWorkerAsync();
 		}
-		else {
-			MusicOperator::playNext();
-		}
-		MusicOperator::Play();
-		SongListener->RunWorkerAsync();
 	}
-
-	private: System::Void SongListener_ProgressChanged(System::Object^ sender, System::ComponentModel::ProgressChangedEventArgs^ e) {
+	private: delegate Void UpdateSongProgress(int procent);
+	private: Void DoUpdateSongProgress(int procent) {
 		int OfsetSeconds = MusicOperator::getOfset() % 60;
 		int OfsetMinutes = (MusicOperator::getOfset() - OfsetSeconds) / 60;
-		if (e->ProgressPercentage <= 1 && !MusicOperator::getCurrentPath().empty()) {
-			OfsetSeconds = MusicOperator::getToalDuration() % 60;
-			OfsetMinutes = (MusicOperator::getToalDuration() - OfsetSeconds) / 60;
-			SongProgress->Maximum = MusicOperator::getToalDuration();
-			SongDurationTotal->Text = OfsetMinutes + ":" + OfsetSeconds;
-			TagLib::FileRef FR(MusicOperator::getCurrentPath().c_str());
-			SongAuthor->Text = gcnew String(FR.tag()->artist().toCString());
-			SongTitle->Text = gcnew String(FR.tag()->title().toCString());
-		}
 		OfsetSeconds = MusicOperator::getOfset() % 60;
 		OfsetMinutes = (MusicOperator::getOfset() - OfsetSeconds) / 60;
 		SongDurationCurrent->Text = OfsetMinutes + ":" + OfsetSeconds;
-		SongProgress->Value = e->ProgressPercentage;
+		SongProgress->Value = procent;
+	}
+	private: System::Void SongListener_ProgressChanged(System::Object^ sender, System::ComponentModel::ProgressChangedEventArgs^ e) {
+		UpdateSongProgress^ USP = gcnew UpdateSongProgress(this, &MainForm::DoUpdateSongProgress);
+		this->Invoke(USP, e->ProgressPercentage);
 	}
 	private: System::Void SongProgress_MouseDown(System::Object^ sender, System::Windows::Forms::MouseEventArgs^ e) {
 		MusicOperator::setOfset(SongProgress->Value);
@@ -1083,18 +1090,26 @@ namespace Vinil {
 		System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(MainForm::typeid));
 		if (MusicOperator::getStatus() == sf::Music::Status::Playing) {
 			MusicOperator::Pause();
+			PlayButton->Image = Image::FromFile(".\\resouces\\Play.png");
 			MusicOperator::setStopped(true);
-			//PlayButton->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"button5.Image")));
 		}
 		else  if (MusicOperator::getStatus() == sf::Music::Status::Paused || MusicOperator::getStatus() == sf::Music::Status::Stopped) {
+			PlayButton->Image = Image::FromFile(".\\resouces\\Pause.png");
 			MusicOperator::Play();
-			SongListener->RunWorkerAsync();
 			MusicOperator::setStopped(false);
-			//PlayButton->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"Pause.Image")));
 		}
 	}
 	private: System::Void Nextbutton_Click(System::Object^ sender, System::EventArgs^ e) {
-		MusicOperator::playNext();
+		if (MusicOperator::getShuffle()) {
+			MusicOperator::playRandom();
+		}
+		else {
+			MusicOperator::playNext();
+		}
+		MusicOperator::Play();
+		if (!SongListener->IsBusy) {
+			SongListener->RunWorkerAsync();
+		}
 	}
 	private: System::Void LoopButton_Click(System::Object^ sender, System::EventArgs^ e) {
 		if (!looped) {
@@ -1130,5 +1145,47 @@ namespace Vinil {
 		}
 	}
 
-	};
+
+	private: delegate Void UpdateDisplaySongData();
+	private: Void DOUpdateDisplaySongData() {
+		int	OfsetSeconds = MusicOperator::getToalDuration() % 60;
+		int	OfsetMinutes = (MusicOperator::getToalDuration() - OfsetSeconds) / 60;
+		SongProgress->Maximum = MusicOperator::getToalDuration();
+		SongDurationTotal->Text = OfsetMinutes + ":" + OfsetSeconds;
+		TagLib::FileRef FR(MusicOperator::getCurrentPath().c_str());
+		SongAuthor->Text = gcnew String(FR.tag()->artist().toCString());
+		SongTitle->Text = gcnew String(FR.tag()->title().toCString());
+	}
+		   /// <summary>
+		   /// This BackgroundWorker is responcible for listening and perioodically update UI based on state of the Application
+		   /// </summary>
+	private: System::Void SongChangeListener_DoWork(System::Object^ sender, System::ComponentModel::DoWorkEventArgs^ e) {
+		try
+		{
+			while (true) {
+				if (MusicOperator::getSongChanged()) {
+					UpdateDisplaySongData^ US = gcnew UpdateDisplaySongData(this, &MainForm::DOUpdateDisplaySongData);
+					this->Invoke(US);
+					if (!SongListener->IsBusy) {
+						SongListener->RunWorkerAsync();
+					}
+				}
+				if (MusicOperator::getStatus() == sf::Music::Status::Playing) {
+					PlayButton->Image = Image::FromFile(".\\resouces\\Pause.png");
+				}
+				else {
+					PlayButton->Image = Image::FromFile(".\\resouces\\Play.png");
+				}
+				System::Threading::Thread::Sleep(1000);
+			}
+		}
+		catch (System::Exception^ e)
+		{
+			Console::WriteLine("Exception At [SongChangeListener_DoWork]:" + e->Message);
+		}
+	}
+	private: System::Void SongChangeListener_RunWorkerCompleted(System::Object^ sender, System::ComponentModel::RunWorkerCompletedEventArgs^ e) {
+		SongChangeListener->RunWorkerAsync();
+	}
+};
 }

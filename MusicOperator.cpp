@@ -7,9 +7,10 @@ static bool loop = false;
 static bool shuffle = false;
 static bool wasStopped = false;
 static int currentPos = 0;
-
+static bool songChanged = false;
 MusicOperator::MusicOperator()
 {
+	
 }
 
 void MusicOperator::PlayFromPath(char* path)
@@ -17,6 +18,8 @@ void MusicOperator::PlayFromPath(char* path)
 	currentPos = std::find(playQueue.begin(), playQueue.end(), path) - playQueue.begin();
 	player.openFromFile(path);
 	currentPath = path;
+	songChanged = true;
+
 	if (!wasStopped) { Play(); }
 }
 
@@ -24,6 +27,8 @@ void MusicOperator::playNext()
 {
 	currentPath = playQueue.at(currentPos += 1);
 	player.openFromFile(currentPath);
+	songChanged = true;
+
 	if (!wasStopped) { Play(); }
 }
 
@@ -31,14 +36,19 @@ void MusicOperator::playPrevious()
 {
 	currentPath = playQueue.at(currentPos -= 1);
 	player.openFromFile(currentPath);
+	songChanged = true;
+
 	if (!wasStopped) { Play(); }
 }
 
 void MusicOperator::playRandom()
 {
+	srand(time(NULL));
 	currentPos = rand() % (playQueue.size() + 1);
 	currentPath = playQueue.at(currentPos);
 	player.openFromFile(currentPath);
+	songChanged = true;
+
 }
 
 void MusicOperator::SetVolume(int volume)
@@ -56,8 +66,7 @@ void MusicOperator::Pause()
 	player.pause();
 }
 
-void MusicOperator::Play()
-{
+void MusicOperator::Play(){
 	player.play();
 }
 
@@ -91,6 +100,7 @@ std::string MusicOperator::getCurrentPath()
 {
 	if (currentPath.empty() && playQueue.size() > 0) {
 		currentPath = playQueue.at(currentPos);
+		songChanged = true;
 	}
 	return currentPath;
 }
@@ -103,6 +113,12 @@ sf::Music::Status MusicOperator::getStatus()
 std::vector<std::string> MusicOperator::getPlayQueue()
 {
 	return playQueue;
+}
+
+std::string MusicOperator::getUpdatedPath()
+{
+	songChanged = false;
+	return currentPath;
 }
 
 void MusicOperator::setPlayQueue(std::vector<std::string> data)
@@ -137,4 +153,8 @@ float MusicOperator::getPlayPercentage()
 	float tot = static_cast<float>(MusicOperator::getToalDuration());
 	float dif = cur / tot;
 	return  dif;
+}
+
+bool MusicOperator::getSongChanged() {
+	return songChanged;
 }

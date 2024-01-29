@@ -20,12 +20,15 @@ struct MusicOperator {
 	 static std::string getCurrentPath();
 	 static sf::Music::Status getStatus();
 	 static std::vector<std::string> getPlayQueue();
+	 static std::string getUpdatedPath();
 	 static void setPlayQueue(std::vector<std::string> data);
 	 static void setShuffle(bool val);
 	 static bool getShuffle();
 	 static void setStopped(bool val);
 	 static bool getStopped();
 	 static float getPlayPercentage();
+	 static bool getSongChanged();
+	 
 	 
 	 
 };
