@@ -1206,7 +1206,7 @@ namespace Vinil {
 				   auto p2 = y->getPath();
 				   FILETIME creationTime1 = GetFileCreationTime(p1);
 				   FILETIME creationTime2 = GetFileCreationTime(p2);
-				   return CompareFileTime(&creationTime2,&creationTime1);
+				   return CompareFileTime(&creationTime1, &creationTime2) > 0;
 			   }
 		   };
 
@@ -1231,13 +1231,6 @@ namespace Vinil {
 		if (arr->Length != 0) {
 			MainSongLinearLayout->Controls->Clear();
 			MainSongLinearLayout->Controls->AddRange(arr);
-			for (size_t i = 0; i < arr->Length; i++)
-			{
-				if (i % 2 == 0)
-					arr[i]->BackColor = Color::FromArgb(43,43,43);
-				else
-					arr[i]->BackColor = Color::Transparent;
-			}
 		}
 	}
 	};

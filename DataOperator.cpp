@@ -1,8 +1,19 @@
 #include "DataOperator.h"
+#include <Windows.h>
 
 static std::vector<std::string> v_dirs;
 static std::vector<std::string> v_musicPaths;
 static std::vector<std::string> v_currentPlay;
+
+
+FILETIME GetFileCreationTime(const std::string& filePath) {
+	FILETIME creationTime = {};
+	WIN32_FILE_ATTRIBUTE_DATA fileAttributes;
+	if (GetFileAttributesExA(filePath.c_str(), GetFileExInfoStandard, &fileAttributes)) {
+		creationTime = fileAttributes.ftCreationTime;
+	}
+	return creationTime;
+}
 
 size_t DataOperator::ReadDataFolders() {
 	v_dirs.clear();
@@ -30,6 +41,12 @@ std::vector<std::string>* DataOperator::GetSongpaths() {
 				v_musicPaths.push_back(entry.path().string());
 		}
 	}
+	std::sort(v_musicPaths.begin(),v_musicPaths.end(), [](const std::string& path1, const std::string& path2) {
+		FILETIME creationTime1 = GetFileCreationTime(path1);
+		FILETIME creationTime2 = GetFileCreationTime(path2);
+		// Compare file creation times
+		return CompareFileTime(&creationTime1, &creationTime2) > 0;
+		});
 	return &v_musicPaths;
 }
 

@@ -174,8 +174,8 @@ namespace Vinil {
 	private: System::Void SongPlayButton_Click(System::Object^ sender, System::EventArgs^ e) {
 		MusicOperator::PlayFromPath((char*)(Runtime::InteropServices::Marshal::StringToHGlobalAnsi(this->path)).ToPointer());
 	}
-	public: System::String^ getPath() {
-		return this->path;
+	public: char* getPath() {
+		return (char*)(Runtime::InteropServices::Marshal::StringToHGlobalAnsi(this->path)).ToPointer();
 	}
 	public: TagLib::FileRef* getFileRef() {
 		return FR;

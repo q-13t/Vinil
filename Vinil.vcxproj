@@ -96,7 +96,7 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>taglibd.lib;flac.lib;ogg.lib;openal32.lib;sfml-audio-d.lib;sfml-system-d.lib;vorbis.lib;vorbisenc.lib;vorbisfile.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <SuppressStartupBanner>true</SuppressStartupBanner>
       <ShowProgress>NotSet</ShowProgress>
       <AdditionalLibraryDirectories>$(ProjectDir)packages\SFML-2.6.1\lib;$(ProjectDir)packages\taglibcpp.1.11.1\lib\native\lib\x64-v140;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
