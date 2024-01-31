@@ -4,9 +4,11 @@
 #include <fstream>
 #include <string>
 #include <vector>
-
+#include <Windows.h>
 
 struct DataOperator {
+	
+	static FILETIME GetFileCreationTime(const std::string& filePath);
 
 	static size_t ReadDataFolders();
 

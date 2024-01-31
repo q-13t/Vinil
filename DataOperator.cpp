@@ -1,12 +1,12 @@
 #include "DataOperator.h"
-#include <Windows.h>
+
 
 static std::vector<std::string> v_dirs;
 static std::vector<std::string> v_musicPaths;
 static std::vector<std::string> v_currentPlay;
 
 
-FILETIME GetFileCreationTime(const std::string& filePath) {
+FILETIME DataOperator::GetFileCreationTime(const std::string& filePath) {
 	FILETIME creationTime = {};
 	WIN32_FILE_ATTRIBUTE_DATA fileAttributes;
 	if (GetFileAttributesExA(filePath.c_str(), GetFileExInfoStandard, &fileAttributes)) {

@@ -2,7 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <Windows.h>
-
+#include <tbytevectorstream.h>
 namespace Vinil {
 
 	using namespace System;
@@ -676,7 +676,7 @@ namespace Vinil {
 			   this->SongDurationCurrent->Name = L"SongDurationCurrent";
 			   this->SongDurationCurrent->Size = System::Drawing::Size(61, 25);
 			   this->SongDurationCurrent->TabIndex = 3;
-			   this->SongDurationCurrent->Text = L"3:12";
+			   //this->SongDurationCurrent->Text = L"3:12";
 			   this->SongDurationCurrent->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
 			   // 
 			   // SongProgress
@@ -699,7 +699,7 @@ namespace Vinil {
 			   this->SongDurationTotal->Name = L"SongDurationTotal";
 			   this->SongDurationTotal->Size = System::Drawing::Size(69, 25);
 			   this->SongDurationTotal->TabIndex = 4;
-			   this->SongDurationTotal->Text = L"3:12";
+			   //this->SongDurationTotal->Text = L"3:12";
 			   this->SongDurationTotal->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
 			   // 
 			   // panel3
@@ -789,7 +789,7 @@ namespace Vinil {
 			   this->SongTitle->Name = L"SongTitle";
 			   this->SongTitle->Size = System::Drawing::Size(100, 25);
 			   this->SongTitle->TabIndex = 0;
-			   this->SongTitle->Text = L"Track Name";
+			   //this->SongTitle->Text = L"Track Name";
 			   this->SongTitle->TextAlign = System::Drawing::ContentAlignment::BottomLeft;
 			   // 
 			   // SongAuthor
@@ -801,7 +801,7 @@ namespace Vinil {
 			   this->SongAuthor->Name = L"SongAuthor";
 			   this->SongAuthor->Size = System::Drawing::Size(100, 25);
 			   this->SongAuthor->TabIndex = 1;
-			   this->SongAuthor->Text = L"Author";
+			   //this->SongAuthor->Text = L"Author";
 			   // 
 			   // SongAlbumImage
 			   // 
@@ -1049,13 +1049,10 @@ namespace Vinil {
 	private: System::Void SongListener_RunWorkerCompleted(System::Object^ sender, System::ComponentModel::RunWorkerCompletedEventArgs^ e) {
 		if (!MusicOperator::getStopped()) {
 			if (MusicOperator::getLoop()) {}
-			else if (MusicOperator::getShuffle()) {
-				MusicOperator::playRandom();
-			}
 			else {
 				MusicOperator::playNext();
 			}
-			MusicOperator::Play();
+			//MusicOperator::Play();
 			if (!SongListener->IsBusy)
 				SongListener->RunWorkerAsync();
 		}
@@ -1066,7 +1063,7 @@ namespace Vinil {
 		int OfsetMinutes = (MusicOperator::getOfset() - OfsetSeconds) / 60;
 		OfsetSeconds = MusicOperator::getOfset() % 60;
 		OfsetMinutes = (MusicOperator::getOfset() - OfsetSeconds) / 60;
-		SongDurationCurrent->Text = OfsetMinutes + ":" + OfsetSeconds;
+		SongDurationCurrent->Text = OfsetMinutes + ":" + ((OfsetSeconds > 10) ? OfsetSeconds + "" : "0" + OfsetSeconds);
 		SongProgress->Value = procent;
 	}
 	private: System::Void SongListener_ProgressChanged(System::Object^ sender, System::ComponentModel::ProgressChangedEventArgs^ e) {
@@ -1092,13 +1089,9 @@ namespace Vinil {
 		}
 	}
 	private: System::Void Nextbutton_Click(System::Object^ sender, System::EventArgs^ e) {
-		if (MusicOperator::getShuffle()) {
-			MusicOperator::playRandom();
-		}
-		else {
-			MusicOperator::playNext();
-		}
-		MusicOperator::Play();
+
+		MusicOperator::playNext();
+		//MusicOperator::Play();
 		if (!SongListener->IsBusy) {
 			SongListener->RunWorkerAsync();
 		}
@@ -1143,10 +1136,18 @@ namespace Vinil {
 		int	OfsetSeconds = MusicOperator::getToalDuration() % 60;
 		int	OfsetMinutes = (MusicOperator::getToalDuration() - OfsetSeconds) / 60;
 		SongProgress->Maximum = MusicOperator::getToalDuration();
-		SongDurationTotal->Text = OfsetMinutes + ":" + OfsetSeconds;
+		SongDurationTotal->Text = OfsetMinutes + ":" + ((OfsetSeconds > 10) ? OfsetSeconds + "" : "0" + OfsetSeconds);
 		TagLib::FileRef FR(MusicOperator::getCurrentPath().c_str());
 		SongAuthor->Text = gcnew String(FR.tag()->artist().toCString());
 		SongTitle->Text = gcnew String(FR.tag()->title().toCString());
+
+		//TagLib::ByteVector albumImageData = FR.tag()->album().data(FR.file()->tag()->album().UTF16);
+		//array<unsigned char>^ arr = gcnew array<unsigned char>(albumImageData.size());
+		//for (size_t i = 0; i < albumImageData.size(); i++){
+		//	arr[i] = albumImageData.at(i);
+		//}
+		//SongAlbumImage->Image = Image::FromStream(gcnew System::IO::MemoryStream(arr));
+
 		if (MusicOperator::getStatus() == sf::Music::Status::Playing) {
 			PlayButton->Image = Image::FromFile(".\\resouces\\Pause.png");
 		}
@@ -1201,13 +1202,13 @@ namespace Vinil {
 				   }
 				   return creationTime;
 			   }
-			   public: virtual int Compare(SongContainer^ x, SongContainer^ y) {
-				   auto p1 = x->getPath();
-				   auto p2 = y->getPath();
-				   FILETIME creationTime1 = GetFileCreationTime(p1);
-				   FILETIME creationTime2 = GetFileCreationTime(p2);
-				   return CompareFileTime(&creationTime2,&creationTime1);
-			   }
+		   public: virtual int Compare(SongContainer^ x, SongContainer^ y) {
+			   auto p1 = x->getPath();
+			   auto p2 = y->getPath();
+			   FILETIME creationTime1 = GetFileCreationTime(p1);
+			   FILETIME creationTime2 = GetFileCreationTime(p2);
+			   return CompareFileTime(&creationTime2, &creationTime1);
+		   }
 		   };
 
 	private: System::Void SongSortComboBox_SelectedIndexChanged(System::Object^ sender, System::EventArgs^ e) {
@@ -1234,7 +1235,7 @@ namespace Vinil {
 			for (size_t i = 0; i < arr->Length; i++)
 			{
 				if (i % 2 == 0)
-					arr[i]->BackColor = Color::FromArgb(43,43,43);
+					arr[i]->BackColor = Color::FromArgb(43, 43, 43);
 				else
 					arr[i]->BackColor = Color::Transparent;
 			}

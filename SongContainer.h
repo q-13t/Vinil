@@ -166,7 +166,7 @@ namespace Vinil {
 			this->SongAuthor->Text = gcnew String(FR_p->tag()->artist().toCString());
 			int seconds = FR_p->audioProperties()->lengthInSeconds() % 60;
 			int minutes = (FR_p->audioProperties()->lengthInSeconds() - seconds) / 60;
-			this->SongDuration->Text = gcnew String(minutes + ":" + seconds);
+			this->SongDuration->Text = minutes + ":" + ((seconds > 10) ? seconds + "" : "0" + seconds);
 			this->path = gcnew String(path->c_str());
 			this->FR = FR_p;
 		}

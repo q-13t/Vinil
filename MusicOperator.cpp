@@ -1,16 +1,20 @@
 #include "MusicOperator.h"
 
 static std::vector<std::string> playQueue;
+static std::vector<std::string> recentPlays;
 static sf::Music player;
 static std::string currentPath;
 static bool loop = false;
 static bool shuffle = false;
 static bool wasStopped = false;
-static int currentPos = 0;
 static bool songChanged = false;
+static int currentPos = 0;
+static int recentPos = 0;
+
+
 MusicOperator::MusicOperator()
 {
-	
+
 }
 
 void MusicOperator::PlayFromPath(char* path)
@@ -18,27 +22,45 @@ void MusicOperator::PlayFromPath(char* path)
 	currentPos = std::find(playQueue.begin(), playQueue.end(), path) - playQueue.begin();
 	player.openFromFile(path);
 	currentPath = path;
-	songChanged = true;
+	addToRecentPlays(&currentPath);
 
 	if (!wasStopped) { Play(); }
+	songChanged = true;
 }
 
 void MusicOperator::playNext()
 {
-	currentPath = playQueue.at(currentPos += 1);
-	player.openFromFile(currentPath);
-	songChanged = true;
+	if (++recentPos < recentPlays.size()) {
+		currentPath = recentPlays.at(recentPos);
+	}
+	else if (shuffle) {
+		playRandom();
+		return;
+	}
+	else {
+		if (currentPos > playQueue.size())currentPos = 0;
+		currentPath = playQueue.at(++currentPos);
+		addToRecentPlays(&currentPath);
+	}
 
+	player.openFromFile(currentPath);
 	if (!wasStopped) { Play(); }
+	songChanged = true;
 }
 
 void MusicOperator::playPrevious()
 {
-	currentPath = playQueue.at(currentPos -= 1);
+	if (recentPos - 1 >= 0 && recentPlays.size() > 0) {
+		currentPath = recentPlays.at(--recentPos);
+	}
+	else {
+		if (currentPos <= 0) currentPos = playQueue.size();
+		currentPath = playQueue.at(--currentPos);
+		addToRecentPlays(&currentPath);
+	}
 	player.openFromFile(currentPath);
-	songChanged = true;
-
 	if (!wasStopped) { Play(); }
+	songChanged = true;
 }
 
 void MusicOperator::playRandom()
@@ -47,6 +69,8 @@ void MusicOperator::playRandom()
 	currentPos = rand() % (playQueue.size() + 1);
 	currentPath = playQueue.at(currentPos);
 	player.openFromFile(currentPath);
+	addToRecentPlays(&currentPath);
+	if (!wasStopped) { Play(); }
 	songChanged = true;
 
 }
@@ -66,7 +90,7 @@ void MusicOperator::Pause()
 	player.pause();
 }
 
-void MusicOperator::Play(){
+void MusicOperator::Play() {
 	player.play();
 }
 
@@ -157,4 +181,10 @@ float MusicOperator::getPlayPercentage()
 
 bool MusicOperator::getSongChanged() {
 	return songChanged;
+}
+
+void MusicOperator::addToRecentPlays(std::string* path)
+{
+	recentPlays.push_back(*path);
+	recentPos = recentPlays.size() - 1;
 }
