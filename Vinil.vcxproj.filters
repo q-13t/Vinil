@@ -33,6 +33,9 @@
     <ClCompile Include="MainForm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="PlayListContainer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainForm.h">
@@ -50,6 +53,9 @@
     <ClInclude Include="MusicOperator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="PlayListContainer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -61,10 +67,19 @@
     <Image Include="..\Icons\Pause.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="resouces\Pause.png">
+    <Image Include="resources\Pause.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="resouces\Play.png">
+    <Image Include="resources\Play.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\Sound.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\NO Sound.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resources\PlayList.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

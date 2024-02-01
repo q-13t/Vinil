@@ -1,9 +1,11 @@
+#include <vector>
+#include <algorithm>
 #include "DataOperator.h"
 #include "MusicOperator.h"
 #include "SongContainer.h"
 #include "DirPathContainer.h"
+#include "PlayListContainer.h"
 #include "MainForm.h"
-
 
 
 

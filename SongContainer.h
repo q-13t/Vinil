@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include <fileref.h>
 #include "MusicOperator.h"
+#include "DataOperator.h"
 
 namespace Vinil {
 
@@ -78,7 +79,7 @@ namespace Vinil {
 			this->SongCheckBox->TabIndex = 0;
 			this->SongCheckBox->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
 			this->SongCheckBox->UseVisualStyleBackColor = false;
-			//this->SongCheckBox->CheckedChanged += gcnew System::EventHandler(this, &SongContainer::SongCheckBox_CheckedChanged);
+			this->SongCheckBox->CheckedChanged += gcnew System::EventHandler(this, &SongContainer::SongCheckBox_CheckedChanged);
 			// 
 			// SongPlayButton
 			// 
@@ -147,7 +148,7 @@ namespace Vinil {
 			this->Controls->Add(this->SongTitle, 2, 0);
 			this->Controls->Add(this->SongAuthor, 3, 0);
 			this->Controls->Add(this->SongDuration, 4, 0);
-			this->Dock = System::Windows::Forms::DockStyle::Fill;
+			this->Dock = System::Windows::Forms::DockStyle::Top;
 			this->RowCount = 1;
 			this->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 100)));
 			this->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 20)));
@@ -181,6 +182,13 @@ namespace Vinil {
 		return FR;
 	}
 	private: System::Void SongCheckBox_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+		char* path = (char*)(Runtime::InteropServices::Marshal::StringToHGlobalAnsi(this->path)).ToPointer();
+		if (SongCheckBox->Checked) {
+			DataOperator::getCheckedSongs()->push_back(path);
+		}
+		else {
+			DataOperator::getCheckedSongs()->erase(std::find(DataOperator::getCheckedSongs()->begin(), DataOperator::getCheckedSongs()->end(), path));
+		}
 	}
 	public: System::String^ getTitle() {
 		return SongTitle->Text;

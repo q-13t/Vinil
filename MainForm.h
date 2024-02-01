@@ -33,6 +33,7 @@ namespace Vinil {
 			if (SongListener->IsBusy)SongListener->CancelAsync();
 			if (AppStateListener->IsBusy)AppStateListener->CancelAsync();
 			if (SongFiller->IsBusy)SongFiller->CancelAsync();
+			if (PlayListsFiller->IsBusy)PlayListsFiller->CancelAsync();
 			if (components)
 			{
 				delete components;
@@ -41,7 +42,7 @@ namespace Vinil {
 	private: System::Windows::Forms::SplitContainer^ splitContainer1;
 	private: System::Windows::Forms::SplitContainer^ splitContainer2;
 	private: System::Windows::Forms::Button^ settings_button;
-	private: System::Windows::Forms::Panel^ panel1;
+
 	private: System::Windows::Forms::FlowLayoutPanel^ flowLayoutPanel1;
 	private: System::Windows::Forms::PictureBox^ pictureBox1;
 	private: System::Windows::Forms::TextBox^ textBox1;
@@ -90,6 +91,11 @@ namespace Vinil {
 	private: System::ComponentModel::BackgroundWorker^ AppStateListener;
 
 	private: System::Windows::Forms::TrackBar^ SongProgress;
+	private: System::Windows::Forms::Button^ DeletePlayListButton;
+	private: System::Windows::Forms::TableLayoutPanel^ PlayListLinearLayout;
+	private: System::ComponentModel::BackgroundWorker^ PlayListsFiller;
+	private: System::Windows::Forms::TableLayoutPanel^ SubSongLinearLayout;
+
 	private: array<SongContainer^>^ MainSongList = gcnew array<SongContainer^>(0);
 
 
@@ -103,7 +109,7 @@ namespace Vinil {
 			   System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(MainForm::typeid));
 			   this->splitContainer1 = (gcnew System::Windows::Forms::SplitContainer());
 			   this->splitContainer2 = (gcnew System::Windows::Forms::SplitContainer());
-			   this->panel1 = (gcnew System::Windows::Forms::Panel());
+			   this->PlayListLinearLayout = (gcnew System::Windows::Forms::TableLayoutPanel());
 			   this->settings_button = (gcnew System::Windows::Forms::Button());
 			   this->flowLayoutPanel1 = (gcnew System::Windows::Forms::FlowLayoutPanel());
 			   this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
@@ -111,6 +117,7 @@ namespace Vinil {
 			   this->SongListBtn = (gcnew System::Windows::Forms::Button());
 			   this->button5 = (gcnew System::Windows::Forms::Button());
 			   this->SongsPanel = (gcnew System::Windows::Forms::Panel());
+			   this->DeletePlayListButton = (gcnew System::Windows::Forms::Button());
 			   this->PlaylistNameTextArea = (gcnew System::Windows::Forms::TextBox());
 			   this->SongSortComboBox = (gcnew System::Windows::Forms::ComboBox());
 			   this->SavePlayListButton = (gcnew System::Windows::Forms::Button());
@@ -142,6 +149,8 @@ namespace Vinil {
 			   this->SongFiller = (gcnew System::ComponentModel::BackgroundWorker());
 			   this->SongListener = (gcnew System::ComponentModel::BackgroundWorker());
 			   this->AppStateListener = (gcnew System::ComponentModel::BackgroundWorker());
+			   this->PlayListsFiller = (gcnew System::ComponentModel::BackgroundWorker());
+			   this->SubSongLinearLayout = (gcnew System::Windows::Forms::TableLayoutPanel());
 			   (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->splitContainer1))->BeginInit();
 			   this->splitContainer1->Panel1->SuspendLayout();
 			   this->splitContainer1->Panel2->SuspendLayout();
@@ -197,8 +206,8 @@ namespace Vinil {
 			   this->splitContainer1->Panel2->Controls->Add(this->splitContainer4);
 			   this->splitContainer1->Panel2->Controls->Add(this->panel2);
 			   this->splitContainer1->Panel2MinSize = 50;
-			   this->splitContainer1->Size = System::Drawing::Size(1156, 595);
-			   this->splitContainer1->SplitterDistance = 544;
+			   this->splitContainer1->Size = System::Drawing::Size(1142, 561);
+			   this->splitContainer1->SplitterDistance = 510;
 			   this->splitContainer1->SplitterWidth = 1;
 			   this->splitContainer1->TabIndex = 0;
 			   // 
@@ -214,7 +223,7 @@ namespace Vinil {
 			   // 
 			   this->splitContainer2->Panel1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(43)),
 				   static_cast<System::Int32>(static_cast<System::Byte>(43)), static_cast<System::Int32>(static_cast<System::Byte>(43)));
-			   this->splitContainer2->Panel1->Controls->Add(this->panel1);
+			   this->splitContainer2->Panel1->Controls->Add(this->PlayListLinearLayout);
 			   this->splitContainer2->Panel1->Controls->Add(this->settings_button);
 			   this->splitContainer2->Panel1->Controls->Add(this->flowLayoutPanel1);
 			   this->splitContainer2->Panel1->Tag = L"Tag1";
@@ -223,20 +232,28 @@ namespace Vinil {
 			   // 
 			   this->splitContainer2->Panel2->Controls->Add(this->SongsPanel);
 			   this->splitContainer2->Panel2->Controls->Add(this->SettingPanel);
-			   this->splitContainer2->Size = System::Drawing::Size(1156, 544);
+			   this->splitContainer2->Size = System::Drawing::Size(1142, 510);
 			   this->splitContainer2->SplitterDistance = 320;
 			   this->splitContainer2->SplitterWidth = 1;
 			   this->splitContainer2->TabIndex = 0;
 			   // 
-			   // panel1
+			   // PlayListLinearLayout
 			   // 
-			   this->panel1->AutoScroll = true;
-			   this->panel1->AutoSizeMode = System::Windows::Forms::AutoSizeMode::GrowAndShrink;
-			   this->panel1->Dock = System::Windows::Forms::DockStyle::Bottom;
-			   this->panel1->Location = System::Drawing::Point(0, 232);
-			   this->panel1->Name = L"panel1";
-			   this->panel1->Size = System::Drawing::Size(320, 274);
-			   this->panel1->TabIndex = 5;
+			   this->PlayListLinearLayout->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
+				   | System::Windows::Forms::AnchorStyles::Left)
+				   | System::Windows::Forms::AnchorStyles::Right));
+			   this->PlayListLinearLayout->AutoSizeMode = System::Windows::Forms::AutoSizeMode::GrowAndShrink;
+			   this->PlayListLinearLayout->ColumnCount = 1;
+			   this->PlayListLinearLayout->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
+				   100)));
+			   this->PlayListLinearLayout->Location = System::Drawing::Point(3, 148);
+			   this->PlayListLinearLayout->Name = L"PlayListLinearLayout";
+			   this->PlayListLinearLayout->Padding = System::Windows::Forms::Padding(5);
+			   this->PlayListLinearLayout->RowCount = 1;
+			   this->PlayListLinearLayout->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute,
+				   40)));
+			   this->PlayListLinearLayout->Size = System::Drawing::Size(315, 324);
+			   this->PlayListLinearLayout->TabIndex = 0;
 			   // 
 			   // settings_button
 			   // 
@@ -250,7 +267,7 @@ namespace Vinil {
 			   this->settings_button->ForeColor = System::Drawing::Color::White;
 			   this->settings_button->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"settings_button.Image")));
 			   this->settings_button->ImageAlign = System::Drawing::ContentAlignment::MiddleLeft;
-			   this->settings_button->Location = System::Drawing::Point(0, 506);
+			   this->settings_button->Location = System::Drawing::Point(0, 472);
 			   this->settings_button->Margin = System::Windows::Forms::Padding(0);
 			   this->settings_button->Name = L"settings_button";
 			   this->settings_button->Size = System::Drawing::Size(320, 38);
@@ -356,15 +373,31 @@ namespace Vinil {
 			   // 
 			   // SongsPanel
 			   // 
+			   this->SongsPanel->Controls->Add(this->DeletePlayListButton);
 			   this->SongsPanel->Controls->Add(this->PlaylistNameTextArea);
 			   this->SongsPanel->Controls->Add(this->SongSortComboBox);
 			   this->SongsPanel->Controls->Add(this->SavePlayListButton);
+			   this->SongsPanel->Controls->Add(this->SubSongLinearLayout);
 			   this->SongsPanel->Controls->Add(this->MainSongLinearLayout);
 			   this->SongsPanel->Dock = System::Windows::Forms::DockStyle::Fill;
 			   this->SongsPanel->Location = System::Drawing::Point(0, 0);
 			   this->SongsPanel->Name = L"SongsPanel";
-			   this->SongsPanel->Size = System::Drawing::Size(835, 544);
+			   this->SongsPanel->Size = System::Drawing::Size(821, 510);
 			   this->SongsPanel->TabIndex = 8;
+			   // 
+			   // DeletePlayListButton
+			   // 
+			   this->DeletePlayListButton->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(43)),
+				   static_cast<System::Int32>(static_cast<System::Byte>(43)), static_cast<System::Int32>(static_cast<System::Byte>(43)));
+			   this->DeletePlayListButton->Enabled = false;
+			   this->DeletePlayListButton->FlatStyle = System::Windows::Forms::FlatStyle::Popup;
+			   this->DeletePlayListButton->ForeColor = System::Drawing::Color::White;
+			   this->DeletePlayListButton->Location = System::Drawing::Point(484, 28);
+			   this->DeletePlayListButton->Name = L"DeletePlayListButton";
+			   this->DeletePlayListButton->Size = System::Drawing::Size(89, 23);
+			   this->DeletePlayListButton->TabIndex = 4;
+			   this->DeletePlayListButton->Text = L"Delete Playlist";
+			   this->DeletePlayListButton->UseVisualStyleBackColor = false;
 			   // 
 			   // PlaylistNameTextArea
 			   // 
@@ -406,6 +439,7 @@ namespace Vinil {
 			   this->SavePlayListButton->TabIndex = 1;
 			   this->SavePlayListButton->Text = L"Save Playlist";
 			   this->SavePlayListButton->UseVisualStyleBackColor = false;
+			   this->SavePlayListButton->Click += gcnew System::EventHandler(this, &MainForm::SavePlayListButton_Click);
 			   // 
 			   // MainSongLinearLayout
 			   // 
@@ -421,8 +455,9 @@ namespace Vinil {
 			   this->MainSongLinearLayout->Name = L"MainSongLinearLayout";
 			   this->MainSongLinearLayout->Padding = System::Windows::Forms::Padding(3);
 			   this->MainSongLinearLayout->RowCount = 1;
-			   MainSongLinearLayout->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 40)));
-			   this->MainSongLinearLayout->Size = System::Drawing::Size(808, 479);
+			   this->MainSongLinearLayout->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute,
+				   40)));
+			   this->MainSongLinearLayout->Size = System::Drawing::Size(794, 445);
 			   this->MainSongLinearLayout->TabIndex = 0;
 			   // 
 			   // SettingPanel
@@ -433,7 +468,7 @@ namespace Vinil {
 			   this->SettingPanel->Dock = System::Windows::Forms::DockStyle::Fill;
 			   this->SettingPanel->Location = System::Drawing::Point(0, 0);
 			   this->SettingPanel->Name = L"SettingPanel";
-			   this->SettingPanel->Size = System::Drawing::Size(835, 544);
+			   this->SettingPanel->Size = System::Drawing::Size(821, 510);
 			   this->SettingPanel->TabIndex = 0;
 			   this->SettingPanel->Visible = false;
 			   // 
@@ -448,10 +483,10 @@ namespace Vinil {
 			   this->AddDirButton->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			   this->AddDirButton->ForeColor = System::Drawing::Color::White;
 			   this->AddDirButton->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"AddDirButton.Image")));
-			   this->AddDirButton->Location = System::Drawing::Point(0, 468);
+			   this->AddDirButton->Location = System::Drawing::Point(0, 434);
 			   this->AddDirButton->Margin = System::Windows::Forms::Padding(0);
 			   this->AddDirButton->Name = L"AddDirButton";
-			   this->AddDirButton->Size = System::Drawing::Size(835, 38);
+			   this->AddDirButton->Size = System::Drawing::Size(821, 38);
 			   this->AddDirButton->TabIndex = 6;
 			   this->AddDirButton->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
 			   this->AddDirButton->TextImageRelation = System::Windows::Forms::TextImageRelation::ImageBeforeText;
@@ -467,10 +502,10 @@ namespace Vinil {
 			   this->SaveDirsButton->FlatAppearance->BorderSize = 0;
 			   this->SaveDirsButton->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			   this->SaveDirsButton->ForeColor = System::Drawing::Color::White;
-			   this->SaveDirsButton->Location = System::Drawing::Point(0, 506);
+			   this->SaveDirsButton->Location = System::Drawing::Point(0, 472);
 			   this->SaveDirsButton->Margin = System::Windows::Forms::Padding(0);
 			   this->SaveDirsButton->Name = L"SaveDirsButton";
-			   this->SaveDirsButton->Size = System::Drawing::Size(835, 38);
+			   this->SaveDirsButton->Size = System::Drawing::Size(821, 38);
 			   this->SaveDirsButton->TabIndex = 7;
 			   this->SaveDirsButton->Text = L"Save";
 			   this->SaveDirsButton->TextImageRelation = System::Windows::Forms::TextImageRelation::ImageBeforeText;
@@ -492,7 +527,7 @@ namespace Vinil {
 			   this->LinearLayoutDirContainer->Padding = System::Windows::Forms::Padding(3);
 			   this->LinearLayoutDirContainer->RowCount = 1;
 			   this->LinearLayoutDirContainer->RowStyles->Add((gcnew System::Windows::Forms::RowStyle()));
-			   this->LinearLayoutDirContainer->Size = System::Drawing::Size(835, 6);
+			   this->LinearLayoutDirContainer->Size = System::Drawing::Size(821, 6);
 			   this->LinearLayoutDirContainer->TabIndex = 1;
 			   // 
 			   // splitContainer4
@@ -510,8 +545,8 @@ namespace Vinil {
 			   // splitContainer4.Panel2
 			   // 
 			   this->splitContainer4->Panel2->Controls->Add(this->panel3);
-			   this->splitContainer4->Size = System::Drawing::Size(956, 50);
-			   this->splitContainer4->SplitterDistance = 803;
+			   this->splitContainer4->Size = System::Drawing::Size(942, 50);
+			   this->splitContainer4->SplitterDistance = 789;
 			   this->splitContainer4->TabIndex = 3;
 			   // 
 			   // splitContainer5
@@ -530,7 +565,7 @@ namespace Vinil {
 			   // splitContainer5.Panel2
 			   // 
 			   this->splitContainer5->Panel2->Controls->Add(this->panel4);
-			   this->splitContainer5->Size = System::Drawing::Size(800, 54);
+			   this->splitContainer5->Size = System::Drawing::Size(786, 54);
 			   this->splitContainer5->SplitterDistance = 25;
 			   this->splitContainer5->TabIndex = 0;
 			   // 
@@ -545,7 +580,7 @@ namespace Vinil {
 			   this->flowLayoutPanel2->Controls->Add(this->Previousbutton);
 			   this->flowLayoutPanel2->Controls->Add(this->ShuffleButton);
 			   this->flowLayoutPanel2->FlowDirection = System::Windows::Forms::FlowDirection::RightToLeft;
-			   this->flowLayoutPanel2->Location = System::Drawing::Point(305, -7);
+			   this->flowLayoutPanel2->Location = System::Drawing::Point(298, -7);
 			   this->flowLayoutPanel2->Name = L"flowLayoutPanel2";
 			   this->flowLayoutPanel2->Size = System::Drawing::Size(190, 38);
 			   this->flowLayoutPanel2->TabIndex = 11;
@@ -664,7 +699,7 @@ namespace Vinil {
 			   this->panel4->Dock = System::Windows::Forms::DockStyle::Fill;
 			   this->panel4->Location = System::Drawing::Point(0, 0);
 			   this->panel4->Name = L"panel4";
-			   this->panel4->Size = System::Drawing::Size(800, 25);
+			   this->panel4->Size = System::Drawing::Size(786, 25);
 			   this->panel4->TabIndex = 8;
 			   // 
 			   // SongDurationCurrent
@@ -676,7 +711,6 @@ namespace Vinil {
 			   this->SongDurationCurrent->Name = L"SongDurationCurrent";
 			   this->SongDurationCurrent->Size = System::Drawing::Size(61, 25);
 			   this->SongDurationCurrent->TabIndex = 3;
-			   //this->SongDurationCurrent->Text = L"3:12";
 			   this->SongDurationCurrent->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
 			   // 
 			   // SongProgress
@@ -686,7 +720,7 @@ namespace Vinil {
 			   this->SongProgress->AutoSize = false;
 			   this->SongProgress->Location = System::Drawing::Point(67, 0);
 			   this->SongProgress->Name = L"SongProgress";
-			   this->SongProgress->Size = System::Drawing::Size(658, 20);
+			   this->SongProgress->Size = System::Drawing::Size(644, 20);
 			   this->SongProgress->TabIndex = 5;
 			   this->SongProgress->MouseDown += gcnew System::Windows::Forms::MouseEventHandler(this, &MainForm::SongProgress_MouseDown);
 			   // 
@@ -695,11 +729,10 @@ namespace Vinil {
 			   this->SongDurationTotal->Dock = System::Windows::Forms::DockStyle::Right;
 			   this->SongDurationTotal->ForeColor = System::Drawing::SystemColors::HighlightText;
 			   this->SongDurationTotal->ImageAlign = System::Drawing::ContentAlignment::BottomCenter;
-			   this->SongDurationTotal->Location = System::Drawing::Point(731, 0);
+			   this->SongDurationTotal->Location = System::Drawing::Point(717, 0);
 			   this->SongDurationTotal->Name = L"SongDurationTotal";
 			   this->SongDurationTotal->Size = System::Drawing::Size(69, 25);
 			   this->SongDurationTotal->TabIndex = 4;
-			   //this->SongDurationTotal->Text = L"3:12";
 			   this->SongDurationTotal->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
 			   // 
 			   // panel3
@@ -789,7 +822,6 @@ namespace Vinil {
 			   this->SongTitle->Name = L"SongTitle";
 			   this->SongTitle->Size = System::Drawing::Size(100, 25);
 			   this->SongTitle->TabIndex = 0;
-			   //this->SongTitle->Text = L"Track Name";
 			   this->SongTitle->TextAlign = System::Drawing::ContentAlignment::BottomLeft;
 			   // 
 			   // SongAuthor
@@ -801,7 +833,6 @@ namespace Vinil {
 			   this->SongAuthor->Name = L"SongAuthor";
 			   this->SongAuthor->Size = System::Drawing::Size(100, 25);
 			   this->SongAuthor->TabIndex = 1;
-			   //this->SongAuthor->Text = L"Author";
 			   // 
 			   // SongAlbumImage
 			   // 
@@ -818,8 +849,8 @@ namespace Vinil {
 			   // SongFiller
 			   // 
 			   this->SongFiller->WorkerSupportsCancellation = true;
-			   this->SongFiller->DoWork += gcnew System::ComponentModel::DoWorkEventHandler(this, &MainForm::backgroundWorker1_DoWork);
-			   this->SongFiller->RunWorkerCompleted += gcnew System::ComponentModel::RunWorkerCompletedEventHandler(this, &MainForm::backgroundWorker1_RunWorkerCompleted);
+			   this->SongFiller->DoWork += gcnew System::ComponentModel::DoWorkEventHandler(this, &MainForm::SongFiller_DoWork);
+			   this->SongFiller->RunWorkerCompleted += gcnew System::ComponentModel::RunWorkerCompletedEventHandler(this, &MainForm::SongFiller_RunWorkerCompleted);
 			   // 
 			   // SongListener
 			   // 
@@ -835,14 +866,40 @@ namespace Vinil {
 			   this->AppStateListener->DoWork += gcnew System::ComponentModel::DoWorkEventHandler(this, &MainForm::AppStateListener_DoWork);
 			   this->AppStateListener->RunWorkerCompleted += gcnew System::ComponentModel::RunWorkerCompletedEventHandler(this, &MainForm::AppStateListener_RunWorkerCompleted);
 			   // 
+			   // PlayListsFiller
+			   // 
+			   this->PlayListsFiller->WorkerSupportsCancellation = true;
+			   this->PlayListsFiller->DoWork += gcnew System::ComponentModel::DoWorkEventHandler(this, &MainForm::PlayListsFiller_DoWork);
+			   // 
+			   // SubSongLinearLayout
+			   // 
+			   this->SubSongLinearLayout->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
+				   | System::Windows::Forms::AnchorStyles::Left)
+				   | System::Windows::Forms::AnchorStyles::Right));
+			   this->SubSongLinearLayout->AutoScroll = true;
+			   this->SubSongLinearLayout->ColumnCount = 1;
+			   this->SubSongLinearLayout->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
+				   100)));
+			   this->SubSongLinearLayout->Location = System::Drawing::Point(15, 56);
+			   this->SubSongLinearLayout->Margin = System::Windows::Forms::Padding(0);
+			   this->SubSongLinearLayout->Name = L"SubSongLinearLayout";
+			   this->SubSongLinearLayout->Padding = System::Windows::Forms::Padding(3);
+			   this->SubSongLinearLayout->RowCount = 1;
+			   this->SubSongLinearLayout->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute,
+				   40)));
+			   this->SubSongLinearLayout->Size = System::Drawing::Size(794, 445);
+			   this->SubSongLinearLayout->TabIndex = 1;
+			   this->SubSongLinearLayout->Visible = false;
+			   // 
 			   // MainForm
 			   // 
 			   this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Inherit;
 			   this->AutoSizeMode = System::Windows::Forms::AutoSizeMode::GrowAndShrink;
 			   this->BackColor = System::Drawing::Color::Black;
-			   this->ClientSize = System::Drawing::Size(1156, 595);
+			   this->ClientSize = System::Drawing::Size(1142, 561);
 			   this->Controls->Add(this->splitContainer1);
 			   this->DoubleBuffered = true;
+			   this->ForeColor = System::Drawing::Color::White;
 			   this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			   this->MinimumSize = System::Drawing::Size(1000, 500);
 			   this->Name = L"MainForm";
@@ -894,9 +951,6 @@ namespace Vinil {
 
 		   }
 #pragma endregion
-
-
-
 	private: System::Void MouseEnter(Object^ sender, EventArgs^ e) {
 		Button^ btn = safe_cast<Button^>(sender);
 		if (btn != nullptr) {
@@ -932,13 +986,49 @@ namespace Vinil {
 		else {
 			SongFiller->RunWorkerAsync();
 		}
+		PlayListsFiller->RunWorkerAsync();
 	}
 
-	private: System::Void backgroundWorker1_DoWork(System::Object^ sender, System::ComponentModel::DoWorkEventArgs^ e) {
+	private: delegate void AddPlayList(PlayListContainer^ PLC);
+	private: void DOAddPlayList(PlayListContainer^ PLC) {
+		PlayListLinearLayout->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute, 40)));
+		PlayListLinearLayout->Controls->Add(PLC);
+		PlayListLinearLayout->Update();
+	}
+	private: System::Void DisplayPlaylist_Click(Object^ sender, System::EventArgs^ e) {
+		this->SettingPanel->Visible = false;
+		this->MainSongLinearLayout->Visible = false;
+		this->SubSongLinearLayout->Visible = true;
+		this->SubSongLinearLayout->Controls->Clear();
+		PlayListContainer^ PLC = safe_cast<PlayListContainer^>(sender);
+		int i = 0;
+		for each (auto var in DataOperator::getPlayListByName((char*)(Runtime::InteropServices::Marshal::StringToHGlobalAnsi(PLC->Text)).ToPointer()))
+		{
+			SongContainer^ SC = gcnew SongContainer(&var);
+			if (SC->getAuthor()->Equals("Author") && SC->getTitle()->Equals("Title"))continue;
+			if (i++ % 2 == 0) SC->BackColor = Color::FromArgb(43, 43, 43);
+			this->SubSongLinearLayout->Controls->Add(SC);
+		}
+		DoUpdatePlaylistControlls(true);
+	}
+	private: System::Void PlayListsFiller_DoWork(System::Object^ sender, System::ComponentModel::DoWorkEventArgs^ e) {
+		std::vector<std::string> playlists = DataOperator::checkPlayListsDir();
+		if (playlists.size() != 0) {
+			AddPlayList^ APL = gcnew AddPlayList(this, &MainForm::DOAddPlayList);
+			for (size_t i = 0; i < playlists.size(); i++)
+			{
+				PlayListContainer^ PLC = gcnew PlayListContainer(&playlists.at(i));
+				PLC->Click += gcnew System::EventHandler(this, &MainForm::DisplayPlaylist_Click);
+
+				this->Invoke(APL, PLC);
+			}
+		}
+	}
+	private: System::Void SongFiller_DoWork(System::Object^ sender, System::ComponentModel::DoWorkEventArgs^ e) {
 		DataOperator::getReadyMusicPaths();
 	}
 
-	private:  System::Void backgroundWorker1_RunWorkerCompleted(System::Object^ sender, System::ComponentModel::RunWorkerCompletedEventArgs^ e) {
+	private:  System::Void SongFiller_RunWorkerCompleted(System::Object^ sender, System::ComponentModel::RunWorkerCompletedEventArgs^ e) {
 		if (DataOperator::getReadyMusicPaths()->empty()) {
 			DisplaySettings();
 		}
@@ -962,11 +1052,17 @@ namespace Vinil {
 		}
 		SettingPanel->Visible = true;
 		SongsPanel->Visible = false;
+		SubSongLinearLayout->Visible = false;
+		MainSongLinearLayout->Visible = true;
+
 	}
 		   Threading::Thread^ thread;
 	private: Void DisplaySongs() {
 		SettingPanel->Visible = false;
+		SubSongLinearLayout->Visible = false;
+		MainSongLinearLayout->Visible = true;
 		SongsPanel->Visible = true;
+
 		if (MainSongList->Length > 0) {
 			MainSongLinearLayout->Controls->Clear();
 
@@ -990,7 +1086,6 @@ namespace Vinil {
 				if (i % 2 == 0) SC->BackColor = Color::FromArgb(43, 43, 43);
 				MainSongList[i] = SC;
 				this->Invoke(US, SC);
-
 			}
 		}
 		catch (System::Exception^ e)
@@ -1018,6 +1113,7 @@ namespace Vinil {
 
 	private: System::Void SongListBtn_Click(System::Object^ sender, System::EventArgs^ e) {
 		DisplaySongs();
+		DoUpdatePlaylistControlls(false);
 	}
 
 	private: System::Void VolumeSlider_Scroll(System::Object^ sender, System::EventArgs^ e) {
@@ -1029,14 +1125,14 @@ namespace Vinil {
 	private: System::Void MuteButton_Click(System::Object^ sender, System::EventArgs^ e) {
 		System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(MainForm::typeid));
 		if (!muted) {
-			this->MuteButton->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"NO Sound.Image")));
+			this->MuteButton->Image = Image::FromFile(".\\resources\\NO Sound.png");
 			this->muted = true;
 			MusicOperator::SetVolume(0);
 		}
 		else {
 			this->muted = false;
 			MusicOperator::SetVolume(this->VolumeSlider->Value);
-			this->MuteButton->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"MuteButton.Image")));
+			this->MuteButton->Image = Image::FromFile(".\\resources\\Sound.png");
 		}
 	}
 
@@ -1079,11 +1175,11 @@ namespace Vinil {
 		System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(MainForm::typeid));
 		if (MusicOperator::getStatus() == sf::Music::Status::Playing) {
 			MusicOperator::Pause();
-			PlayButton->Image = Image::FromFile(".\\resouces\\Play.png");
+			PlayButton->Image = Image::FromFile(".\\resources\\Play.png");
 			MusicOperator::setStopped(true);
 		}
 		else  if (MusicOperator::getStatus() == sf::Music::Status::Paused || MusicOperator::getStatus() == sf::Music::Status::Stopped) {
-			PlayButton->Image = Image::FromFile(".\\resouces\\Pause.png");
+			PlayButton->Image = Image::FromFile(".\\resources\\Pause.png");
 			MusicOperator::Play();
 			MusicOperator::setStopped(false);
 		}
@@ -1148,14 +1244,21 @@ namespace Vinil {
 		//}
 		//SongAlbumImage->Image = Image::FromStream(gcnew System::IO::MemoryStream(arr));
 
+
+
 		if (MusicOperator::getStatus() == sf::Music::Status::Playing) {
-			PlayButton->Image = Image::FromFile(".\\resouces\\Pause.png");
+			PlayButton->Image = Image::FromFile(".\\resources\\Pause.png");
 		}
 		else {
-			PlayButton->Image = Image::FromFile(".\\resouces\\Play.png");
+			PlayButton->Image = Image::FromFile(".\\resources\\Play.png");
 		}
 	}
-
+	private:delegate Void UpdatePlaylistControlls(bool);
+	private: Void DoUpdatePlaylistControlls(bool val) {
+		PlaylistNameTextArea->Enabled = val;
+		DeletePlayListButton->Enabled = val;
+		SavePlayListButton->Enabled = val;
+	};
 
 		   /// <summary>
 		   /// This BackgroundWorker is responcible for listening and perioodically update UI based on state of the Application
@@ -1170,6 +1273,14 @@ namespace Vinil {
 					if (!SongListener->IsBusy) {
 						SongListener->RunWorkerAsync();
 					}
+				}
+				if (DataOperator::getCheckedSongs()->size() > 0 && (PlaylistNameTextArea->Enabled == false || SavePlayListButton->Enabled == false || DeletePlayListButton->Enabled == false)) {
+					UpdatePlaylistControlls^ UPLC = gcnew UpdatePlaylistControlls(this, &MainForm::DoUpdatePlaylistControlls);
+					this->Invoke(UPLC, true);
+				}
+				else if (DataOperator::getCheckedSongs()->size() == 0 && (PlaylistNameTextArea->Enabled == true || SavePlayListButton->Enabled == true || DeletePlayListButton->Enabled == true)) {
+					UpdatePlaylistControlls^ UPLC = gcnew UpdatePlaylistControlls(this, &MainForm::DoUpdatePlaylistControlls);
+					this->Invoke(UPLC, false);
 				}
 				System::Threading::Thread::Sleep(1000);
 			}
@@ -1239,6 +1350,31 @@ namespace Vinil {
 				else
 					arr[i]->BackColor = Color::Transparent;
 			}
+		}
+	}
+
+
+	private: bool canceled = false;
+	private:  System::Void DoUncheckSong() {
+		for (size_t i = 0; i < this->MainSongLinearLayout->Controls->Count; i++) {
+			auto val = safe_cast<SongContainer^>(MainSongLinearLayout->GetControlFromPosition(0, i));
+			val->SongCheckBox->Checked = false;
+			if (canceled)break;
+		}
+	}
+		   System::Threading::Tasks::Task^ uncheckerTask;
+	private: System::Void SavePlayListButton_Click(System::Object^ sender, System::EventArgs^ e) {
+		std::string playlistName = (char*)(Runtime::InteropServices::Marshal::StringToHGlobalAnsi(this->PlaylistNameTextArea->Text)).ToPointer();
+		if (!playlistName.empty()) {
+			DataOperator::SavePlayList(playlistName);
+			this->PlaylistNameTextArea->Clear();
+			if (!this->PlayListsFiller->IsBusy) {
+				this->PlayListsFiller->RunWorkerAsync();
+			}
+			if (uncheckerTask && uncheckerTask->Status == TaskStatus::Running) {
+				this->canceled = true;
+			}
+			uncheckerTask = Task::Run(gcnew Action(this, &MainForm::DoUncheckSong));
 		}
 	}
 	};
