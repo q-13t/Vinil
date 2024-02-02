@@ -16,7 +16,9 @@ namespace Vinil {
 		PlayListContainer(std::string* playlistname)
 		{
 			InitializeComponent();
-			this->Text = (gcnew String(playlistname->c_str()))->Replace(".txt", "");
+			auto formated = (gcnew String(playlistname->c_str()))->Replace(".txt", "");
+			this->Text = formated;
+			this->Name = formated;
 		}
 	protected:
 		~PlayListContainer()

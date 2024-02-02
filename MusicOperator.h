@@ -43,7 +43,8 @@ struct MusicOperator {
 
 	static bool getSongChanged();
 
-	private: static void addToRecentPlays(std::string* path);
+private: static void addToRecentPlays(std::string* path);
+public: static std::vector<std::string>* getRecentPlays();
 
 };
 

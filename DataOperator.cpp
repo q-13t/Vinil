@@ -5,9 +5,10 @@ static std::vector<std::string> v_dirs;
 static std::vector<std::string> v_musicPaths;
 static std::vector<std::string> v_currentPlay;
 static std::vector<std::string> checkedPathes;
+static std::string currentPlaylist;
 
 using namespace std;
-using namespace std::filesystem ;
+using namespace std::filesystem;
 
 FILETIME DataOperator::GetFileCreationTime(const string& filePath) {
 	FILETIME creationTime = {};
@@ -106,6 +107,27 @@ vector<string> DataOperator::getPlayListByName(string fileName)
 		}
 	}
 	return playlistContent;
+}
+
+std::string* DataOperator::getCurrentPlayList()
+{
+	return &currentPlaylist;
+}
+
+void DataOperator::setCurrentPlayList(std::string&& name)
+{
+	currentPlaylist = name;
+}
+
+void DataOperator::RenamePlayList(std::string* name)
+{
+	std::rename(("./playlists/" + currentPlaylist + ".txt").c_str(), ("./playlists/" + *name + ".txt").c_str());
+	currentPlaylist = *name;
+}
+void DataOperator::DeletePlaylist()
+{
+	std::remove(("./playlists/" + currentPlaylist + ".txt").c_str());
+	currentPlaylist = "";
 }
 
 vector<string>* DataOperator::getCheckedSongs()

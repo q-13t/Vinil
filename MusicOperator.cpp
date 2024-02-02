@@ -188,3 +188,8 @@ void MusicOperator::addToRecentPlays(std::string* path)
 	recentPlays.push_back(*path);
 	recentPos = recentPlays.size() - 1;
 }
+
+std::vector<std::string>* MusicOperator::getRecentPlays()
+{
+	return &recentPlays;
+}
