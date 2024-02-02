@@ -213,15 +213,14 @@ namespace Vinil {
 			   this->splitContainer1->Panel2->Controls->Add(this->splitContainer4);
 			   this->splitContainer1->Panel2->Controls->Add(this->panel2);
 			   this->splitContainer1->Panel2MinSize = 50;
-			   this->splitContainer1->Size = System::Drawing::Size(1142, 561);
-			   this->splitContainer1->SplitterDistance = 510;
+			   this->splitContainer1->Size = System::Drawing::Size(984, 461);
+			   this->splitContainer1->SplitterDistance = 410;
 			   this->splitContainer1->SplitterWidth = 1;
 			   this->splitContainer1->TabIndex = 0;
 			   // 
 			   // splitContainer2
 			   // 
 			   this->splitContainer2->Dock = System::Windows::Forms::DockStyle::Fill;
-			   this->splitContainer2->FixedPanel = System::Windows::Forms::FixedPanel::Panel1;
 			   this->splitContainer2->IsSplitterFixed = true;
 			   this->splitContainer2->Location = System::Drawing::Point(0, 0);
 			   this->splitContainer2->Name = L"splitContainer2";
@@ -233,14 +232,15 @@ namespace Vinil {
 			   this->splitContainer2->Panel1->Controls->Add(this->PlayListLinearLayout);
 			   this->splitContainer2->Panel1->Controls->Add(this->settings_button);
 			   this->splitContainer2->Panel1->Controls->Add(this->flowLayoutPanel1);
+			   this->splitContainer2->Panel1->ForeColor = System::Drawing::Color::White;
 			   this->splitContainer2->Panel1->Tag = L"Tag1";
 			   // 
 			   // splitContainer2.Panel2
 			   // 
 			   this->splitContainer2->Panel2->Controls->Add(this->SongsPanel);
 			   this->splitContainer2->Panel2->Controls->Add(this->SettingPanel);
-			   this->splitContainer2->Size = System::Drawing::Size(1142, 510);
-			   this->splitContainer2->SplitterDistance = 320;
+			   this->splitContainer2->Size = System::Drawing::Size(984, 410);
+			   this->splitContainer2->SplitterDistance = 230;
 			   this->splitContainer2->SplitterWidth = 1;
 			   this->splitContainer2->TabIndex = 0;
 			   // 
@@ -259,7 +259,7 @@ namespace Vinil {
 			   this->PlayListLinearLayout->RowCount = 1;
 			   this->PlayListLinearLayout->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute,
 				   40)));
-			   this->PlayListLinearLayout->Size = System::Drawing::Size(315, 324);
+			   this->PlayListLinearLayout->Size = System::Drawing::Size(225, 224);
 			   this->PlayListLinearLayout->TabIndex = 0;
 			   // 
 			   // settings_button
@@ -274,10 +274,10 @@ namespace Vinil {
 			   this->settings_button->ForeColor = System::Drawing::Color::White;
 			   this->settings_button->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"settings_button.Image")));
 			   this->settings_button->ImageAlign = System::Drawing::ContentAlignment::MiddleLeft;
-			   this->settings_button->Location = System::Drawing::Point(0, 472);
+			   this->settings_button->Location = System::Drawing::Point(0, 372);
 			   this->settings_button->Margin = System::Windows::Forms::Padding(0);
 			   this->settings_button->Name = L"settings_button";
-			   this->settings_button->Size = System::Drawing::Size(320, 38);
+			   this->settings_button->Size = System::Drawing::Size(230, 38);
 			   this->settings_button->TabIndex = 4;
 			   this->settings_button->Text = L"Where To Search";
 			   this->settings_button->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
@@ -299,7 +299,7 @@ namespace Vinil {
 			   this->flowLayoutPanel1->Location = System::Drawing::Point(0, 0);
 			   this->flowLayoutPanel1->Margin = System::Windows::Forms::Padding(0);
 			   this->flowLayoutPanel1->Name = L"flowLayoutPanel1";
-			   this->flowLayoutPanel1->Size = System::Drawing::Size(320, 145);
+			   this->flowLayoutPanel1->Size = System::Drawing::Size(230, 145);
 			   this->flowLayoutPanel1->TabIndex = 0;
 			   this->flowLayoutPanel1->WrapContents = false;
 			   // 
@@ -327,6 +327,7 @@ namespace Vinil {
 			   this->SongSearchArea->Name = L"SongSearchArea";
 			   this->SongSearchArea->Size = System::Drawing::Size(320, 13);
 			   this->SongSearchArea->TabIndex = 3;
+			   this->SearchToolTip->SetToolTip(this->SongSearchArea, L"Type Song name or author and press Enter");
 			   this->SongSearchArea->KeyUp += gcnew System::Windows::Forms::KeyEventHandler(this, &MainForm::SongSearchArea_KeyUp);
 			   // 
 			   // SongListBtn
@@ -381,6 +382,7 @@ namespace Vinil {
 			   // 
 			   // SongsPanel
 			   // 
+			   this->SongsPanel->AutoSizeMode = System::Windows::Forms::AutoSizeMode::GrowAndShrink;
 			   this->SongsPanel->Controls->Add(this->DeletePlayListButton);
 			   this->SongsPanel->Controls->Add(this->PlaylistNameTextArea);
 			   this->SongsPanel->Controls->Add(this->SongSortComboBox);
@@ -390,7 +392,7 @@ namespace Vinil {
 			   this->SongsPanel->Dock = System::Windows::Forms::DockStyle::Fill;
 			   this->SongsPanel->Location = System::Drawing::Point(0, 0);
 			   this->SongsPanel->Name = L"SongsPanel";
-			   this->SongsPanel->Size = System::Drawing::Size(821, 510);
+			   this->SongsPanel->Size = System::Drawing::Size(753, 410);
 			   this->SongsPanel->TabIndex = 8;
 			   // 
 			   // DeletePlayListButton
@@ -466,7 +468,7 @@ namespace Vinil {
 			   this->SubSongLinearLayout->RowCount = 1;
 			   this->SubSongLinearLayout->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute,
 				   40)));
-			   this->SubSongLinearLayout->Size = System::Drawing::Size(794, 445);
+			   this->SubSongLinearLayout->Size = System::Drawing::Size(726, 345);
 			   this->SubSongLinearLayout->TabIndex = 1;
 			   this->SubSongLinearLayout->Visible = false;
 			   // 
@@ -486,7 +488,7 @@ namespace Vinil {
 			   this->MainSongLinearLayout->RowCount = 1;
 			   this->MainSongLinearLayout->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Absolute,
 				   40)));
-			   this->MainSongLinearLayout->Size = System::Drawing::Size(794, 445);
+			   this->MainSongLinearLayout->Size = System::Drawing::Size(726, 345);
 			   this->MainSongLinearLayout->TabIndex = 0;
 			   // 
 			   // SettingPanel
@@ -497,7 +499,7 @@ namespace Vinil {
 			   this->SettingPanel->Dock = System::Windows::Forms::DockStyle::Fill;
 			   this->SettingPanel->Location = System::Drawing::Point(0, 0);
 			   this->SettingPanel->Name = L"SettingPanel";
-			   this->SettingPanel->Size = System::Drawing::Size(821, 510);
+			   this->SettingPanel->Size = System::Drawing::Size(753, 410);
 			   this->SettingPanel->TabIndex = 0;
 			   this->SettingPanel->Visible = false;
 			   // 
@@ -512,10 +514,10 @@ namespace Vinil {
 			   this->AddDirButton->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			   this->AddDirButton->ForeColor = System::Drawing::Color::White;
 			   this->AddDirButton->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"AddDirButton.Image")));
-			   this->AddDirButton->Location = System::Drawing::Point(0, 434);
+			   this->AddDirButton->Location = System::Drawing::Point(0, 334);
 			   this->AddDirButton->Margin = System::Windows::Forms::Padding(0);
 			   this->AddDirButton->Name = L"AddDirButton";
-			   this->AddDirButton->Size = System::Drawing::Size(821, 38);
+			   this->AddDirButton->Size = System::Drawing::Size(753, 38);
 			   this->AddDirButton->TabIndex = 6;
 			   this->AddDirButton->TextAlign = System::Drawing::ContentAlignment::MiddleLeft;
 			   this->AddDirButton->TextImageRelation = System::Windows::Forms::TextImageRelation::ImageBeforeText;
@@ -531,10 +533,10 @@ namespace Vinil {
 			   this->SaveDirsButton->FlatAppearance->BorderSize = 0;
 			   this->SaveDirsButton->FlatStyle = System::Windows::Forms::FlatStyle::Flat;
 			   this->SaveDirsButton->ForeColor = System::Drawing::Color::White;
-			   this->SaveDirsButton->Location = System::Drawing::Point(0, 472);
+			   this->SaveDirsButton->Location = System::Drawing::Point(0, 372);
 			   this->SaveDirsButton->Margin = System::Windows::Forms::Padding(0);
 			   this->SaveDirsButton->Name = L"SaveDirsButton";
-			   this->SaveDirsButton->Size = System::Drawing::Size(821, 38);
+			   this->SaveDirsButton->Size = System::Drawing::Size(753, 38);
 			   this->SaveDirsButton->TabIndex = 7;
 			   this->SaveDirsButton->Text = L"Save";
 			   this->SaveDirsButton->TextImageRelation = System::Windows::Forms::TextImageRelation::ImageBeforeText;
@@ -556,7 +558,7 @@ namespace Vinil {
 			   this->LinearLayoutDirContainer->Padding = System::Windows::Forms::Padding(3);
 			   this->LinearLayoutDirContainer->RowCount = 1;
 			   this->LinearLayoutDirContainer->RowStyles->Add((gcnew System::Windows::Forms::RowStyle()));
-			   this->LinearLayoutDirContainer->Size = System::Drawing::Size(821, 6);
+			   this->LinearLayoutDirContainer->Size = System::Drawing::Size(753, 6);
 			   this->LinearLayoutDirContainer->TabIndex = 1;
 			   // 
 			   // splitContainer4
@@ -574,8 +576,8 @@ namespace Vinil {
 			   // splitContainer4.Panel2
 			   // 
 			   this->splitContainer4->Panel2->Controls->Add(this->panel3);
-			   this->splitContainer4->Size = System::Drawing::Size(942, 50);
-			   this->splitContainer4->SplitterDistance = 789;
+			   this->splitContainer4->Size = System::Drawing::Size(784, 50);
+			   this->splitContainer4->SplitterDistance = 631;
 			   this->splitContainer4->TabIndex = 3;
 			   // 
 			   // splitContainer5
@@ -594,7 +596,7 @@ namespace Vinil {
 			   // splitContainer5.Panel2
 			   // 
 			   this->splitContainer5->Panel2->Controls->Add(this->panel4);
-			   this->splitContainer5->Size = System::Drawing::Size(786, 54);
+			   this->splitContainer5->Size = System::Drawing::Size(628, 54);
 			   this->splitContainer5->SplitterDistance = 25;
 			   this->splitContainer5->TabIndex = 0;
 			   // 
@@ -609,7 +611,7 @@ namespace Vinil {
 			   this->flowLayoutPanel2->Controls->Add(this->Previousbutton);
 			   this->flowLayoutPanel2->Controls->Add(this->ShuffleButton);
 			   this->flowLayoutPanel2->FlowDirection = System::Windows::Forms::FlowDirection::RightToLeft;
-			   this->flowLayoutPanel2->Location = System::Drawing::Point(298, -7);
+			   this->flowLayoutPanel2->Location = System::Drawing::Point(219, -7);
 			   this->flowLayoutPanel2->Name = L"flowLayoutPanel2";
 			   this->flowLayoutPanel2->Size = System::Drawing::Size(190, 38);
 			   this->flowLayoutPanel2->TabIndex = 11;
@@ -728,7 +730,7 @@ namespace Vinil {
 			   this->panel4->Dock = System::Windows::Forms::DockStyle::Fill;
 			   this->panel4->Location = System::Drawing::Point(0, 0);
 			   this->panel4->Name = L"panel4";
-			   this->panel4->Size = System::Drawing::Size(786, 25);
+			   this->panel4->Size = System::Drawing::Size(628, 25);
 			   this->panel4->TabIndex = 8;
 			   // 
 			   // SongDurationCurrent
@@ -749,7 +751,7 @@ namespace Vinil {
 			   this->SongProgress->AutoSize = false;
 			   this->SongProgress->Location = System::Drawing::Point(67, 0);
 			   this->SongProgress->Name = L"SongProgress";
-			   this->SongProgress->Size = System::Drawing::Size(644, 20);
+			   this->SongProgress->Size = System::Drawing::Size(486, 20);
 			   this->SongProgress->TabIndex = 5;
 			   this->SongProgress->MouseDown += gcnew System::Windows::Forms::MouseEventHandler(this, &MainForm::SongProgress_MouseDown);
 			   // 
@@ -758,7 +760,7 @@ namespace Vinil {
 			   this->SongDurationTotal->Dock = System::Windows::Forms::DockStyle::Right;
 			   this->SongDurationTotal->ForeColor = System::Drawing::SystemColors::HighlightText;
 			   this->SongDurationTotal->ImageAlign = System::Drawing::ContentAlignment::BottomCenter;
-			   this->SongDurationTotal->Location = System::Drawing::Point(717, 0);
+			   this->SongDurationTotal->Location = System::Drawing::Point(559, 0);
 			   this->SongDurationTotal->Name = L"SongDurationTotal";
 			   this->SongDurationTotal->Size = System::Drawing::Size(69, 25);
 			   this->SongDurationTotal->TabIndex = 4;
@@ -904,14 +906,13 @@ namespace Vinil {
 			   // 
 			   this->SearchToolTip->BackColor = System::Drawing::SystemColors::InfoText;
 			   this->SearchToolTip->ForeColor = System::Drawing::SystemColors::Info;
-			   this->SearchToolTip->SetToolTip(SongSearchArea, "Type Song name or author and press Enter");
 			   // 
 			   // MainForm
 			   // 
 			   this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Inherit;
 			   this->AutoSizeMode = System::Windows::Forms::AutoSizeMode::GrowAndShrink;
 			   this->BackColor = System::Drawing::Color::Black;
-			   this->ClientSize = System::Drawing::Size(1142, 561);
+			   this->ClientSize = System::Drawing::Size(984, 461);
 			   this->Controls->Add(this->splitContainer1);
 			   this->DoubleBuffered = true;
 			   this->ForeColor = System::Drawing::Color::White;
@@ -1007,12 +1008,12 @@ namespace Vinil {
 		auto play = DataOperator::getPlayListByName(name);
 		this->SubSongList = gcnew array<SongContainer^>(play.size());
 		for (int i = 0; i < play.size(); i++)
-		{	
+		{
 			SongContainer^ SC = gcnew SongContainer(&play.at(i));
 			if (SC->getAuthor()->Equals("Author") && SC->getTitle()->Equals("Title"))continue;
 			if (i % 2 == 0) SC->BackColor = Color::FromArgb(43, 43, 43);
 			this->SubSongLinearLayout->Controls->Add(SC);
-			this->SubSongList[i++] = SC;
+			this->SubSongList[i] = SC;
 		}
 		DoUpdatePlaylistControlls(true);
 	}
@@ -1161,7 +1162,7 @@ namespace Vinil {
 		int OfsetMinutes = (MusicOperator::getOfset() - OfsetSeconds) / 60;
 		OfsetSeconds = MusicOperator::getOfset() % 60;
 		OfsetMinutes = (MusicOperator::getOfset() - OfsetSeconds) / 60;
-		SongDurationCurrent->Text = OfsetMinutes + ":" + ((OfsetSeconds >+ 10) ? OfsetSeconds + "" : "0" + OfsetSeconds);
+		SongDurationCurrent->Text = OfsetMinutes + ":" + ((OfsetSeconds > +10) ? OfsetSeconds + "" : "0" + OfsetSeconds);
 		SongProgress->Value = procent;
 	}
 	private: System::Void SongListener_ProgressChanged(System::Object^ sender, System::ComponentModel::ProgressChangedEventArgs^ e) {
@@ -1235,9 +1236,16 @@ namespace Vinil {
 		int	OfsetMinutes = (MusicOperator::getToalDuration() - OfsetSeconds) / 60;
 		SongProgress->Maximum = MusicOperator::getToalDuration();
 		SongDurationTotal->Text = OfsetMinutes + ":" + ((OfsetSeconds >= 10) ? OfsetSeconds + "" : "0" + OfsetSeconds);
+		if (this->MainSongLinearLayout->Visible) {
+			MusicOperator::setPlayQueue(*DataOperator::getReadyMusicPaths());
+		}
+		else {
+			MusicOperator::setPlayQueue(DataOperator::getPlayListByName(*DataOperator::getCurrentPlayList()));
+		}
 		TagLib::FileRef FR(MusicOperator::getCurrentPath().c_str());
 		SongAuthor->Text = gcnew String(FR.tag()->artist().toCString());
 		SongTitle->Text = gcnew String(FR.tag()->title().toCString());
+		
 
 		//TagLib::ByteVector albumImageData = FR.tag()->album().data(FR.file()->tag()->album().UTF16);
 		//array<unsigned char>^ arr = gcnew array<unsigned char>(albumImageData.size());
@@ -1394,13 +1402,13 @@ namespace Vinil {
 		this->SubSongLinearLayout->Controls->Clear();
 
 		auto plays = MusicOperator::getRecentPlays();
-		this->SubSongList= gcnew array<SongContainer^>(plays->size());
+		this->SubSongList = gcnew array<SongContainer^>(plays->size());
 		for (size_t i = 0; i < plays->size(); i++)
 		{
 			SongContainer^ SC = gcnew SongContainer(&plays->at(i));
 			if (SC->getAuthor()->Equals("Author") && SC->getTitle()->Equals("Title"))continue;
 			if (i % 2 == 0) SC->BackColor = Color::FromArgb(43, 43, 43);
-			SubSongList[i++] = SC;
+			SubSongList[i] = SC;
 			this->SubSongLinearLayout->Controls->Add(SC);
 		}
 	}
@@ -1446,5 +1454,5 @@ namespace Vinil {
 		}
 	}
 
-};
+	};
 }

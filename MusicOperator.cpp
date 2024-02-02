@@ -20,7 +20,9 @@ MusicOperator::MusicOperator()
 void MusicOperator::PlayFromPath(char* path)
 {
 	currentPos = std::find(playQueue.begin(), playQueue.end(), path) - playQueue.begin();
-	player.openFromFile(path);
+	if (&currentPath != nullptr) {
+		player.openFromFile(currentPath);
+	}
 	currentPath = path;
 	addToRecentPlays(&currentPath);
 
@@ -38,12 +40,13 @@ void MusicOperator::playNext()
 		return;
 	}
 	else {
-		if (currentPos > playQueue.size())currentPos = 0;
+		if (currentPos > playQueue.size())currentPos = -1;
 		currentPath = playQueue.at(++currentPos);
 		addToRecentPlays(&currentPath);
 	}
-
-	player.openFromFile(currentPath);
+	if (&currentPath != nullptr) {
+		player.openFromFile(currentPath);
+	}
 	if (!wasStopped) { Play(); }
 	songChanged = true;
 }
@@ -58,7 +61,9 @@ void MusicOperator::playPrevious()
 		currentPath = playQueue.at(--currentPos);
 		addToRecentPlays(&currentPath);
 	}
-	player.openFromFile(currentPath);
+	if (&currentPath != nullptr) {
+		player.openFromFile(currentPath);
+	}
 	if (!wasStopped) { Play(); }
 	songChanged = true;
 }
@@ -68,7 +73,9 @@ void MusicOperator::playRandom()
 	srand(time(NULL));
 	currentPos = rand() % (playQueue.size() + 1);
 	currentPath = playQueue.at(currentPos);
-	player.openFromFile(currentPath);
+	if (&currentPath != nullptr) {
+		player.openFromFile(currentPath);
+	}
 	addToRecentPlays(&currentPath);
 	if (!wasStopped) { Play(); }
 	songChanged = true;
@@ -91,7 +98,14 @@ void MusicOperator::Pause()
 }
 
 void MusicOperator::Play() {
-	player.play();
+	try
+	{
+		player.play();
+	}
+	catch (const std::exception& e )
+	{
+		System::Console::WriteLine("MusicOperator::Play() ERROR");
+	}
 }
 
 int MusicOperator::getOfset()
