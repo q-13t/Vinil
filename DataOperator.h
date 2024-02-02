@@ -28,7 +28,7 @@ struct DataOperator {
 	static std::vector<std::string> getPlayListByName(std::string fileName);
 	
 	static std::string* getCurrentPlayList();
-	static void setCurrentPlayList(std::string&& name);
+	static void setCurrentPlayList(std::string name);
 
 	static void RenamePlayList(std::string* name);
 	static void DeletePlaylist();

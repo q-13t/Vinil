@@ -45,7 +45,8 @@ namespace Vinil {
 
 	private: System::Windows::Forms::FlowLayoutPanel^ flowLayoutPanel1;
 	private: System::Windows::Forms::PictureBox^ pictureBox1;
-	private: System::Windows::Forms::TextBox^ textBox1;
+	private: System::Windows::Forms::TextBox^ SongSearchArea;
+
 	private: System::Windows::Forms::Button^ SongListBtn;
 	private: System::Windows::Forms::Button^ RecentPlaysButton;
 	private: System::Windows::Forms::SplitContainer^ splitContainer3;
@@ -86,7 +87,8 @@ namespace Vinil {
 		bool muted = false;
 		   bool shuffle = MusicOperator::getShuffle();
 		   bool looped = MusicOperator::getLoop();
-		   System::ComponentModel::Container^ components;
+	private: System::ComponentModel::IContainer^ components;
+
 	private: System::ComponentModel::BackgroundWorker^ SongListener;
 	private: System::ComponentModel::BackgroundWorker^ AppStateListener;
 
@@ -97,6 +99,9 @@ namespace Vinil {
 	private: System::Windows::Forms::TableLayoutPanel^ SubSongLinearLayout;
 
 	private: array<SongContainer^>^ MainSongList = gcnew array<SongContainer^>(0);
+	private: System::Windows::Forms::ToolTip^ SearchToolTip;
+
+	private: array<SongContainer^>^ SubSongList = gcnew array<SongContainer^>(0);
 
 
 #pragma region Windows Form Designer generated code
@@ -106,6 +111,7 @@ namespace Vinil {
 		   /// </summary>
 		   void InitializeComponent(void)
 		   {
+			   this->components = (gcnew System::ComponentModel::Container());
 			   System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(MainForm::typeid));
 			   this->splitContainer1 = (gcnew System::Windows::Forms::SplitContainer());
 			   this->splitContainer2 = (gcnew System::Windows::Forms::SplitContainer());
@@ -113,7 +119,7 @@ namespace Vinil {
 			   this->settings_button = (gcnew System::Windows::Forms::Button());
 			   this->flowLayoutPanel1 = (gcnew System::Windows::Forms::FlowLayoutPanel());
 			   this->pictureBox1 = (gcnew System::Windows::Forms::PictureBox());
-			   this->textBox1 = (gcnew System::Windows::Forms::TextBox());
+			   this->SongSearchArea = (gcnew System::Windows::Forms::TextBox());
 			   this->SongListBtn = (gcnew System::Windows::Forms::Button());
 			   this->RecentPlaysButton = (gcnew System::Windows::Forms::Button());
 			   this->SongsPanel = (gcnew System::Windows::Forms::Panel());
@@ -151,6 +157,7 @@ namespace Vinil {
 			   this->SongListener = (gcnew System::ComponentModel::BackgroundWorker());
 			   this->AppStateListener = (gcnew System::ComponentModel::BackgroundWorker());
 			   this->PlayListsFiller = (gcnew System::ComponentModel::BackgroundWorker());
+			   this->SearchToolTip = (gcnew System::Windows::Forms::ToolTip(this->components));
 			   (cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->splitContainer1))->BeginInit();
 			   this->splitContainer1->Panel1->SuspendLayout();
 			   this->splitContainer1->Panel2->SuspendLayout();
@@ -284,7 +291,7 @@ namespace Vinil {
 			   // 
 			   this->flowLayoutPanel1->AutoSizeMode = System::Windows::Forms::AutoSizeMode::GrowAndShrink;
 			   this->flowLayoutPanel1->Controls->Add(this->pictureBox1);
-			   this->flowLayoutPanel1->Controls->Add(this->textBox1);
+			   this->flowLayoutPanel1->Controls->Add(this->SongSearchArea);
 			   this->flowLayoutPanel1->Controls->Add(this->SongListBtn);
 			   this->flowLayoutPanel1->Controls->Add(this->RecentPlaysButton);
 			   this->flowLayoutPanel1->Dock = System::Windows::Forms::DockStyle::Top;
@@ -308,19 +315,19 @@ namespace Vinil {
 			   this->pictureBox1->MouseEnter += gcnew System::EventHandler(this, &MainForm::MouseEnter);
 			   this->pictureBox1->MouseLeave += gcnew System::EventHandler(this, &MainForm::MouseLeave);
 			   // 
-			   // textBox1
+			   // SongSearchArea
 			   // 
-			   this->textBox1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(26)), static_cast<System::Int32>(static_cast<System::Byte>(26)),
+			   this->SongSearchArea->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(26)), static_cast<System::Int32>(static_cast<System::Byte>(26)),
 				   static_cast<System::Int32>(static_cast<System::Byte>(26)));
-			   this->textBox1->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			   this->textBox1->Dock = System::Windows::Forms::DockStyle::Right;
-			   this->textBox1->ForeColor = System::Drawing::Color::Gray;
-			   this->textBox1->Location = System::Drawing::Point(0, 56);
-			   this->textBox1->Margin = System::Windows::Forms::Padding(0);
-			   this->textBox1->Name = L"textBox1";
-			   this->textBox1->Size = System::Drawing::Size(320, 13);
-			   this->textBox1->TabIndex = 3;
-			   this->textBox1->Text = L"Search";
+			   this->SongSearchArea->BorderStyle = System::Windows::Forms::BorderStyle::None;
+			   this->SongSearchArea->Dock = System::Windows::Forms::DockStyle::Right;
+			   this->SongSearchArea->ForeColor = System::Drawing::Color::Gray;
+			   this->SongSearchArea->Location = System::Drawing::Point(0, 56);
+			   this->SongSearchArea->Margin = System::Windows::Forms::Padding(0);
+			   this->SongSearchArea->Name = L"SongSearchArea";
+			   this->SongSearchArea->Size = System::Drawing::Size(320, 13);
+			   this->SongSearchArea->TabIndex = 3;
+			   this->SongSearchArea->KeyUp += gcnew System::Windows::Forms::KeyEventHandler(this, &MainForm::SongSearchArea_KeyUp);
 			   // 
 			   // SongListBtn
 			   // 
@@ -893,6 +900,12 @@ namespace Vinil {
 			   this->PlayListsFiller->WorkerSupportsCancellation = true;
 			   this->PlayListsFiller->DoWork += gcnew System::ComponentModel::DoWorkEventHandler(this, &MainForm::PlayListsFiller_DoWork);
 			   // 
+			   // SearchToolTip
+			   // 
+			   this->SearchToolTip->BackColor = System::Drawing::SystemColors::InfoText;
+			   this->SearchToolTip->ForeColor = System::Drawing::SystemColors::Info;
+			   this->SearchToolTip->SetToolTip(SongSearchArea, "Type Song name or author and press Enter");
+			   // 
 			   // MainForm
 			   // 
 			   this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Inherit;
@@ -954,29 +967,13 @@ namespace Vinil {
 		   }
 #pragma endregion
 	private: System::Void MouseEnter(Object^ sender, EventArgs^ e) {
-		Button^ btn = safe_cast<Button^>(sender);
-		if (btn != nullptr) {
-			btn->BackColor = Color::FromArgb(75, 75, 75);
-		}
-		else {
-			Panel^ pan = safe_cast<Panel^>(sender);
-			if (pan != nullptr) {
-				pan->BackColor = Color::FromArgb(75, 75, 75);
-			}
-		}
+		auto converted = safe_cast<Control^>(sender);
+		converted->BackColor = Color::FromArgb(75, 75, 75);
 	}
 
 	private: System::Void MouseLeave(System::Object^ sender, System::EventArgs^ e) {
-		Button^ btn = safe_cast<Button^>(sender);
-		if (btn != nullptr) {
-			btn->BackColor = Color::FromArgb(43, 43, 43);
-		}
-		else {
-			Panel^ pan = safe_cast<Panel^>(sender);
-			if (pan != nullptr) {
-				pan->BackColor = Color::FromArgb(43, 43, 43);
-			}
-		}
+		auto converted = safe_cast<Control^>(sender);
+		converted->BackColor = Color::FromArgb(43, 43, 43);
 	}
 
 	private: System::Void MainForm_Load(System::Object^ sender, System::EventArgs^ e) {
@@ -1007,12 +1004,15 @@ namespace Vinil {
 		PlayListContainer^ PLC = safe_cast<PlayListContainer^>(sender);
 		auto name = (char*)(Runtime::InteropServices::Marshal::StringToHGlobalAnsi(PLC->Text)).ToPointer();
 		DataOperator::setCurrentPlayList(name);
-		int i = 0;
-		for each (auto var in DataOperator::getPlayListByName(name)) {
-			SongContainer^ SC = gcnew SongContainer(&var);
+		auto play = DataOperator::getPlayListByName(name);
+		this->SubSongList = gcnew array<SongContainer^>(play.size());
+		for (int i = 0; i < play.size(); i++)
+		{	
+			SongContainer^ SC = gcnew SongContainer(&play.at(i));
 			if (SC->getAuthor()->Equals("Author") && SC->getTitle()->Equals("Title"))continue;
-			if (i++ % 2 == 0) SC->BackColor = Color::FromArgb(43, 43, 43);
+			if (i % 2 == 0) SC->BackColor = Color::FromArgb(43, 43, 43);
 			this->SubSongLinearLayout->Controls->Add(SC);
+			this->SubSongList[i++] = SC;
 		}
 		DoUpdatePlaylistControlls(true);
 	}
@@ -1161,7 +1161,7 @@ namespace Vinil {
 		int OfsetMinutes = (MusicOperator::getOfset() - OfsetSeconds) / 60;
 		OfsetSeconds = MusicOperator::getOfset() % 60;
 		OfsetMinutes = (MusicOperator::getOfset() - OfsetSeconds) / 60;
-		SongDurationCurrent->Text = OfsetMinutes + ":" + ((OfsetSeconds > 10) ? OfsetSeconds + "" : "0" + OfsetSeconds);
+		SongDurationCurrent->Text = OfsetMinutes + ":" + ((OfsetSeconds >+ 10) ? OfsetSeconds + "" : "0" + OfsetSeconds);
 		SongProgress->Value = procent;
 	}
 	private: System::Void SongListener_ProgressChanged(System::Object^ sender, System::ComponentModel::ProgressChangedEventArgs^ e) {
@@ -1234,7 +1234,7 @@ namespace Vinil {
 		int	OfsetSeconds = MusicOperator::getToalDuration() % 60;
 		int	OfsetMinutes = (MusicOperator::getToalDuration() - OfsetSeconds) / 60;
 		SongProgress->Maximum = MusicOperator::getToalDuration();
-		SongDurationTotal->Text = OfsetMinutes + ":" + ((OfsetSeconds > 10) ? OfsetSeconds + "" : "0" + OfsetSeconds);
+		SongDurationTotal->Text = OfsetMinutes + ":" + ((OfsetSeconds >= 10) ? OfsetSeconds + "" : "0" + OfsetSeconds);
 		TagLib::FileRef FR(MusicOperator::getCurrentPath().c_str());
 		SongAuthor->Text = gcnew String(FR.tag()->artist().toCString());
 		SongTitle->Text = gcnew String(FR.tag()->title().toCString());
@@ -1392,12 +1392,15 @@ namespace Vinil {
 		this->MainSongLinearLayout->Visible = false;
 		this->SubSongLinearLayout->Visible = true;
 		this->SubSongLinearLayout->Controls->Clear();
+
 		auto plays = MusicOperator::getRecentPlays();
+		this->SubSongList= gcnew array<SongContainer^>(plays->size());
 		for (size_t i = 0; i < plays->size(); i++)
 		{
 			SongContainer^ SC = gcnew SongContainer(&plays->at(i));
 			if (SC->getAuthor()->Equals("Author") && SC->getTitle()->Equals("Title"))continue;
-			if (i++ % 2 == 0) SC->BackColor = Color::FromArgb(43, 43, 43);
+			if (i % 2 == 0) SC->BackColor = Color::FromArgb(43, 43, 43);
+			SubSongList[i++] = SC;
 			this->SubSongLinearLayout->Controls->Add(SC);
 		}
 	}
@@ -1409,5 +1412,39 @@ namespace Vinil {
 			DisplaySongs();
 		}
 	}
-	};
+	private: bool SearchMatcher(SongContainer^ SC) {
+		return SC->SongTitle->Text->ToLower()->Contains(SongSearchArea->Text->ToLower()) or SC->SongAuthor->Text->ToLower()->Contains(SongSearchArea->Text->ToLower());
+	}
+	private: System::Void SongSearchArea_KeyUp(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e) {
+		if (e->KeyValue == 13) {//Enter Was Pressed
+			if (!DataOperator::getCurrentPlayList()->empty()) {//If playlist is displayed
+				if (!String::IsNullOrEmpty(SongSearchArea->Text)) { //If Text area is not empty list songs
+					array<SongContainer^>^ arr = gcnew array<SongContainer^>(SubSongLinearLayout->Controls->Count);
+					SubSongLinearLayout->Controls->CopyTo(arr, 0);
+					arr = Array::FindAll(arr, gcnew Predicate<SongContainer^>(this, &MainForm::SearchMatcher));
+					SubSongLinearLayout->Controls->Clear();
+					SubSongLinearLayout->Controls->AddRange(arr);
+				}
+				else {//If Text area is empty list all songs
+					SubSongLinearLayout->Controls->Clear();
+					SubSongLinearLayout->Controls->AddRange(SubSongList);
+				}
+			}
+			else {// If Main Playlist is displayed
+				if (!String::IsNullOrEmpty(SongSearchArea->Text)) { //If Text area is not empty list songs
+					array<SongContainer^>^ arr = gcnew array<SongContainer^>(MainSongLinearLayout->Controls->Count);
+					MainSongLinearLayout->Controls->CopyTo(arr, 0);
+					arr = Array::FindAll(arr, gcnew Predicate<SongContainer^>(this, &MainForm::SearchMatcher));
+					MainSongLinearLayout->Controls->Clear();
+					MainSongLinearLayout->Controls->AddRange(arr);
+				}
+				else {//If Text area is empty list all songs
+					MainSongLinearLayout->Controls->Clear();
+					MainSongLinearLayout->Controls->AddRange(MainSongList);
+				}
+			}
+		}
+	}
+
+};
 }

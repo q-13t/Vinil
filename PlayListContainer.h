@@ -49,12 +49,9 @@ namespace Vinil {
 			this->Text = L"123";
 			this->UseVisualStyleBackColor = true;
 			this->Height = 40;
-			this->Click += gcnew System::EventHandler(this, &PlayListContainer::PlayListContainer_Click);
 			this->ResumeLayout(false);
 
 		}
 #pragma endregion
-	private: System::Void PlayListContainer_Click(System::Object^ sender, System::EventArgs^ e) {
-	}
 	};
 }

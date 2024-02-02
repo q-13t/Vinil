@@ -92,6 +92,7 @@ vector<string> DataOperator::checkPlayListsDir()
 
 vector<string> DataOperator::getPlayListByName(string fileName)
 {
+	setCurrentPlayList(fileName);
 	if (!fileName.ends_with(".txt")) {
 		fileName += ".txt";
 	}
@@ -106,6 +107,7 @@ vector<string> DataOperator::getPlayListByName(string fileName)
 			data.close();
 		}
 	}
+	checkedPathes = playlistContent;
 	return playlistContent;
 }
 
@@ -114,7 +116,7 @@ std::string* DataOperator::getCurrentPlayList()
 	return &currentPlaylist;
 }
 
-void DataOperator::setCurrentPlayList(std::string&& name)
+void DataOperator::setCurrentPlayList(std::string name)
 {
 	currentPlaylist = name;
 }
