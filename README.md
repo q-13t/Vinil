@@ -6,7 +6,9 @@ System: x64-Windows
 # Get
 You can clone the whole repository using:
 
-    git clone https://github.com/q-13t/silentlogger.git
+    git clone https://github.com/q-13t/Vinil.git
+    
+The executable is in `x64/Release` folder
 
 # Features
 - Dark UI
