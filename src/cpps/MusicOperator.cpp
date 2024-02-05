@@ -1,4 +1,4 @@
-#include "MusicOperator.h"
+#include "../headers/MusicOperator.h"
 
 static std::vector<std::string> playQueue;
 static std::vector<std::string> recentPlays;
@@ -108,19 +108,22 @@ void MusicOperator::Play() {
 	}
 }
 
+/// <returns>A current song play time in seconds.</returns>
 int MusicOperator::getOfset()
 {
 	return player.getPlayingOffset().asSeconds();
 }
 
+/// <param name="val">A current song play time in seconds.</param>
 void MusicOperator::setOfset(int val)
 {
 	player.setPlayingOffset(sf::seconds(val));
 }
 
+/// <returns>Total song lenght in seconsds.</returns>
 int MusicOperator::getToalDuration()
 {
-	return player.getDuration().asSeconds();
+	return (int) player.getDuration().asSeconds();
 }
 
 void MusicOperator::setLoop(bool val)
@@ -200,7 +203,7 @@ bool MusicOperator::getSongChanged() {
 void MusicOperator::addToRecentPlays(std::string* path)
 {
 	recentPlays.push_back(*path);
-	recentPos = recentPlays.size() - 1;
+	recentPos = (int)recentPlays.size() - 1;
 }
 
 std::vector<std::string>* MusicOperator::getRecentPlays()

@@ -10,7 +10,7 @@ namespace Vinil {
 	using namespace System::Drawing;
 
 	/// <summary>
-	/// Summary for DirPathContainer
+	/// A container class for holding and displaying SongDirectories data.
 	/// </summary>
 	public ref class DirPathContainer : public System::Windows::Forms::Panel
 	{
@@ -49,7 +49,7 @@ namespace Vinil {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(DirPathContainer::typeid));
+			System::ComponentModel::ComponentResourceManager::ResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager::ResourceManager(L"Vinil.src.resx.DirPathContainer", System::Reflection::Assembly::GetExecutingAssembly()));
 			this->RemoveDirBtn = (gcnew System::Windows::Forms::Button());
 			this->DirPath = (gcnew System::Windows::Forms::RichTextBox());
 			this->SuspendLayout();

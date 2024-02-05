@@ -9,7 +9,9 @@ namespace Vinil {
 	using namespace System::Data;
 	using namespace System::Drawing;
 
-
+	/// <summary>
+	/// A container class for holding and displaying playlist data.
+	/// </summary>
 	public ref class PlayListContainer : public System::Windows::Forms::Button
 	{
 	public:
@@ -31,11 +33,11 @@ namespace Vinil {
 	protected:
 
 	private:
-		System::ComponentModel::Container ^components;
+		System::ComponentModel::Container^ components;
 #pragma region Windows Form Designer generated code
 		void InitializeComponent(void)
 		{
-			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(PlayListContainer::typeid));
+			System::ComponentModel::ComponentResourceManager::ResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager::ResourceManager(L"Vinil.src.resx.PlayListContainer", System::Reflection::Assembly::GetExecutingAssembly()));
 			this->SuspendLayout();
 			// 
 			// PlayListContainer

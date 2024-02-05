@@ -3,8 +3,8 @@
 #include <SFML/Audio.hpp>
 
 struct MusicOperator {
+public:
 	MusicOperator();
-
 
 	static void PlayFromPath(char* path);
 	static void playNext();
@@ -17,9 +17,11 @@ struct MusicOperator {
 	static void Pause();
 	static void Play();
 
+	/// <returns>A current song play time in seconds.</returns>
 	static int getOfset();
+	/// <param name="val">A current song play time in seconds.</param>
 	static void setOfset(int val);
-
+	/// <returns>Total song lenght in seconsds.</returns>
 	static int getToalDuration();
 
 	static void setLoop(bool val);
@@ -43,8 +45,10 @@ struct MusicOperator {
 
 	static bool getSongChanged();
 
-private: static void addToRecentPlays(std::string* path);
-public: static std::vector<std::string>* getRecentPlays();
+	static std::vector<std::string>* getRecentPlays();
+
+private:
+	static void addToRecentPlays(std::string* path);
 
 };
 

@@ -91,7 +91,7 @@
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <Optimization>Disabled</Optimization>
+      <Optimization>MaxSpeed</Optimization>
       <AdditionalIncludeDirectories>$(ProjectDir)packages\SFML-2.6.1\include;$(ProjectDir)packages\taglibcpp.1.11.1\lib\native\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -101,6 +101,7 @@
       <ShowProgress>NotSet</ShowProgress>
       <AdditionalLibraryDirectories>$(ProjectDir)packages\SFML-2.6.1\lib;$(ProjectDir)packages\taglibcpp.1.11.1\lib\native\lib\x64-v140;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <EntryPointSymbol>main</EntryPointSymbol>
+      <EmbedManagedResourceFile>%(EmbedManagedResourceFile)</EmbedManagedResourceFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -138,13 +139,16 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <Optimization>Disabled</Optimization>
+      <Optimization>MaxSpeed</Optimization>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir)packages\SFML-2.6.1\include;$(ProjectDir)packages\taglibcpp.1.11.1\lib\native\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalDependencies />
+      <AdditionalDependencies>taglib.lib;winmm.lib;sfml-system.lib;openal32.lib;flac.lib;vorbisenc.lib;vorbisfile.lib;vorbis.lib;ogg.lib;sfml-audio.lib</AdditionalDependencies>
       <AssemblyDebug>false</AssemblyDebug>
       <SubSystem>Windows</SubSystem>
+      <AdditionalLibraryDirectories>$(ProjectDir)packages\SFML-2.6.1\lib;$(ProjectDir)packages\taglibcpp.1.11.1\lib\native\lib\x64-v140;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <EntryPointSymbol>main</EntryPointSymbol>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -157,55 +161,34 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="DirPathContainer.cpp" />
-    <ClCompile Include="Main.cpp" />
-    <ClCompile Include="MainForm.cpp" />
-    <ClCompile Include="MusicOperator.cpp" />
-    <ClCompile Include="PlayListContainer.cpp" />
-    <ClCompile Include="SongContainer.cpp" />
+    <ClCompile Include="src\cpps\DataOperator.cpp" />
+    <ClCompile Include="src\cpps\MusicOperator.cpp" />
+    <ClCompile Include="src\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="DataOperator.cpp" />
-    <ClInclude Include="DataOperator.h" />
-    <ClInclude Include="DirPathContainer.h">
-      <FileType>CppForm</FileType>
-    </ClInclude>
-    <ClInclude Include="MainForm.h">
-      <FileType>CppForm</FileType>
-    </ClInclude>
-    <ClInclude Include="MusicOperator.h" />
-    <ClInclude Include="PlayListContainer.h">
-      <FileType>CppForm</FileType>
-    </ClInclude>
-    <ClInclude Include="SongContainer.h">
-      <FileType>CppForm</FileType>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="DirPathContainer.resx">
-      <DependentUpon>DirPathContainer.h</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MainForm.resx">
-      <DependentUpon>MainForm.h</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="PlayListContainer.resx">
-      <DependentUpon>PlayListContainer.h</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="SongContainer.resx">
-      <DependentUpon>SongContainer.h</DependentUpon>
-    </EmbeddedResource>
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="src\headers\DataOperator.h" />
+    <ClInclude Include="src\headers\DirPathContainer.h" />
+    <ClInclude Include="src\headers\MainForm.h" />
+    <ClInclude Include="src\headers\MusicOperator.h" />
+    <ClInclude Include="src\headers\PlayListContainer.h" />
+    <ClInclude Include="src\headers\SongContainer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\Icons\NO Sound.png" />
-    <Image Include="..\Icons\Pause.png" />
-    <Image Include="resources\NO Sound.png" />
-    <Image Include="resources\Pause.png" />
-    <Image Include="resources\Play.png" />
-    <Image Include="resources\PlayList.png" />
-    <Image Include="resources\Sound.png" />
+    <EmbeddedResource Include="src\resx\DirPathContainer.resx" />
+    <EmbeddedResource Include="src\resx\MainForm.resx" />
+    <EmbeddedResource Include="src\resx\PlayListContainer.resx" />
+    <EmbeddedResource Include="src\resx\SongContainer.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Vinil.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Icons\VinilLogo.ico" />
+    <Image Include="..\Icons\VinilLogo.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

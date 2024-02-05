@@ -1,4 +1,4 @@
-#include "DataOperator.h"
+#include "../headers/DataOperator.h"
 
 
 static std::vector<std::string> v_dirs;
@@ -19,6 +19,10 @@ FILETIME DataOperator::GetFileCreationTime(const string& filePath) {
 	return creationTime;
 }
 
+/// <summary>
+/// Reads folders containing songs and saves pathes to the folders.
+/// </summary>
+/// <returns>Ammount of found directories</returns>
 size_t DataOperator::ReadDataFolders() {
 	v_dirs.clear();
 	if (::exists("./folders.txt")) {//If exists read folders file
@@ -33,9 +37,12 @@ size_t DataOperator::ReadDataFolders() {
 	}
 	return v_dirs.size();
 }
-
+/// <summary>
+/// Reads folders containing songs and saves pathse to the songs themselves.
+/// </summary>
+/// <returns>Pointer to found songs</returns>
 vector<string>* DataOperator::GetSongpaths() {
-	if (v_dirs.empty()) {
+	if (v_dirs.empty()) {//If there are no folders
 		if (ReadDataFolders() == 0)return NULL;
 	}
 	v_musicPaths.clear();
@@ -56,7 +63,10 @@ vector<string>* DataOperator::GetSongpaths() {
 	);
 	return &v_musicPaths;
 }
-
+/// <summary>
+/// Reads folders containing songs and saves pathse to the songs themselves.
+/// </summary>
+/// <returns>Pointer to found songs</returns>
 vector<string>* DataOperator::getReadyMusicPaths() {
 	if (v_musicPaths.empty()) {
 		GetSongpaths();
@@ -68,10 +78,8 @@ vector<string>* DataOperator::getDirPaths() {
 	return &v_dirs;
 }
 
-/// <summary>
-/// 
-/// </summary>
-/// <returns>std::vector<std::string>* containing playlists names if "./playlists" exists or not initialized std::vector<std::string>*.</returns>
+
+/// <returns>Saved playlists. If any exist.</returns>
 vector<string> DataOperator::checkPlayListsDir()
 {
 	vector<string> playlistNames;
@@ -90,6 +98,8 @@ vector<string> DataOperator::checkPlayListsDir()
 }
 
 
+/// <param name="fileName">Name of playlist(without ".txt")</param>
+/// <returns>Paths to songs in playlist</returns>
 vector<string> DataOperator::getPlayListByName(string fileName)
 {
 	setCurrentPlayList(fileName);
@@ -120,7 +130,10 @@ void DataOperator::setCurrentPlayList(std::string name)
 {
 	currentPlaylist = name;
 }
-
+/// <summary>
+/// Renames currently selected playlist to new name.
+/// </summary>
+/// <param name="name">New name of playlist(without ".txt").</param>
 void DataOperator::RenamePlayList(std::string* name)
 {
 	std::rename(("./playlists/" + currentPlaylist + ".txt").c_str(), ("./playlists/" + *name + ".txt").c_str());

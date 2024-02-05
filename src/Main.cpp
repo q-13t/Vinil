@@ -1,14 +1,16 @@
 #include <vector>
 #include <algorithm>
-#include "DataOperator.h"
-#include "MusicOperator.h"
-#include "SongContainer.h"
-#include "DirPathContainer.h"
-#include "PlayListContainer.h"
-#include "MainForm.h"
+#include "headers/DataOperator.h"
+#include "headers/MusicOperator.h"
+#include "headers/SongContainer.h"
+#include "headers/DirPathContainer.h"
+#include "headers/PlayListContainer.h"
+#include "headers/MainForm.h"
 
 
-
+/// <summary>
+/// Main Entry to the programm
+/// </summary>
 int main(void) {
 	System::Windows::Forms::Application::EnableVisualStyles();
 	System::Windows::Forms::Application::SetCompatibleTextRenderingDefault(false);

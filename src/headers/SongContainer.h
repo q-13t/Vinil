@@ -12,16 +12,19 @@ namespace Vinil {
 	using namespace System::Data;
 	using namespace System::Drawing;
 
-
+	/// <summary>
+	/// A container class for holding and displaying song data.
+	/// </summary>
 	public ref class SongContainer : public System::Windows::Forms::TableLayoutPanel {
 	public:
 		SongContainer(void) {
 			InitializeComponent();
 		}
+
+		/// <param name="path">Full std::string path to the song</param>
 		SongContainer(std::string* path) {
 			InitializeComponent();
 			SetData(path);
-
 		}
 
 	protected:
@@ -57,7 +60,7 @@ namespace Vinil {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(SongContainer::typeid));
+			System::ComponentModel::ComponentResourceManager::ResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager::ResourceManager(L"Vinil.src.resx.SongContainer", System::Reflection::Assembly::GetExecutingAssembly()));
 			this->SongCheckBox = (gcnew System::Windows::Forms::CheckBox());
 			this->SongPlayButton = (gcnew System::Windows::Forms::Button());
 			this->SongTitle = (gcnew System::Windows::Forms::Label());
@@ -159,6 +162,10 @@ namespace Vinil {
 
 		}
 #pragma endregion
+		/// <summary>
+		/// Sets Data for this instance of song Container.
+		/// </summary>
+		/// <param name="path"></param>
 	private: Void SetData(std::string* path) {
 		TagLib::FileRef FR(path->c_str());
 		if (!FR.isNull() && !FR.tag()->title().isEmpty() && FR.audioProperties() != nullptr) {
@@ -172,24 +179,33 @@ namespace Vinil {
 			this->FR = FR_p;
 		}
 	}
+		   //////////////////////////////////////////////////////////////////////////////////////////
+		   //Controlls
+		   //////////////////////////////////////////////////////////////////////////////////////////
 	private: System::Void SongPlayButton_Click(System::Object^ sender, System::EventArgs^ e) {
 		MusicOperator::PlayFromPath((char*)(Runtime::InteropServices::Marshal::StringToHGlobalAnsi(this->path)).ToPointer());
 	}
+	public: System::Void SongCheckBox_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+		if (sender->GetType()->Equals(CheckBox::typeid)) {
+			char* path = (char*)(Runtime::InteropServices::Marshal::StringToHGlobalAnsi(this->path)).ToPointer();
+			if (SongCheckBox->Checked) {
+				DataOperator::getCheckedSongs()->push_back(path);
+			}
+			else {
+				DataOperator::getCheckedSongs()->erase(std::find(DataOperator::getCheckedSongs()->begin(), DataOperator::getCheckedSongs()->end(), path));
+			}
+		}
+	}
+		  //////////////////////////////////////////////////////////////////////////////////////////
+		  //Misc
+		  //////////////////////////////////////////////////////////////////////////////////////////
 	public: char* getPath() {
 		return (char*)(Runtime::InteropServices::Marshal::StringToHGlobalAnsi(this->path)).ToPointer();
 	}
 	public: TagLib::FileRef* getFileRef() {
 		return FR;
 	}
-	private: System::Void SongCheckBox_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
-		char* path = (char*)(Runtime::InteropServices::Marshal::StringToHGlobalAnsi(this->path)).ToPointer();
-		if (SongCheckBox->Checked) {
-			DataOperator::getCheckedSongs()->push_back(path);
-		}
-		else {
-			DataOperator::getCheckedSongs()->erase(std::find(DataOperator::getCheckedSongs()->begin(), DataOperator::getCheckedSongs()->end(), path));
-		}
-	}
+
 	public: System::String^ getTitle() {
 		return SongTitle->Text;
 	}
