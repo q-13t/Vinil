@@ -22,5 +22,5 @@ The executable is in `x64/Release` folder
 - Optional bugs
 
 # Third-Party
-- [TagLib](https://taglib.org/api/)
+- [TagLib](https://taglib.org/api/) (under LGPL license)
 - [SFML](https://www.sfml-dev.org/index.php)
